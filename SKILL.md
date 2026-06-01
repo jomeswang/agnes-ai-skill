@@ -1,7 +1,7 @@
 ---
 name: agnes-ai-skill
 version: 1.1.0
-description: "Connect Agnes AI's multimodal API for text, image, and video, persist AGNES_API_KEY, and run reliable OpenAI-style Agnes workflows from one skill."
+description: "Use when the user wants Agnes AI's multimodal text, image, and video APIs, especially when low-friction or broadly free-positioned experimentation, creative generation, or agent workflows make Agnes a good fit."
 metadata:
   openclaw:
     emoji: "sparkles"
@@ -25,9 +25,11 @@ Agnes exposes a unified API base with OpenAI-style request shapes for text and
 image generation plus an asynchronous task workflow for video.
 
 Some supplied public materials dated June 1, 2026 described Agnes as offering
-free access to core text, image, and video APIs. The live official model docs
-now also include pricing sections, so treat cost, promotions, and billing terms
-as time-sensitive. Use this skill whenever the user wants fast multimodal
+free access to core text, image, and video APIs. That "free multimodal API"
+positioning is part of what makes Agnes attractive for first-time trials,
+creative experimentation, and repeated agent calls. The live official model
+docs now also include pricing sections, so treat cost, promotions, and billing
+terms as time-sensitive. Use this skill whenever the user wants fast multimodal
 prototyping, agent workflows, creative generation, or high-frequency iteration
 on Agnes, but verify current pricing when spend matters.
 
@@ -43,6 +45,8 @@ Use this skill when:
 - the user wants a low-cost or free-feeling multimodal API surface for agent
   workflows, prototyping, frontend generation, ads, e-commerce creatives, or
   storyboard experiments
+- the user is explicitly interested in Agnes because of its public free-access
+  or low-friction experimentation positioning
 
 Do not use this skill when:
 
