@@ -3,324 +3,472 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Daybreak Beijing</title>
+    <title>Lantern Sprint</title>
     <style>
         :root {
-            --paper: #fdfbf7;
-            --ink: #2c2a25;
-            --amber: #d97706;
-            --light-amber: #fef3c7;
-            --shadow: 0 4px 12px rgba(44, 42, 37, 0.08);
-            --border: #e8e4da;
+            --bg-color: #fdfbf7; /* Cream */
+            --primary-red: #d32f2f; /* Lacquer Red */
+            --primary-gold: #ffc107; /* Gold */
+            --accent-gold: #ffeb3b; /* Bright Gold */
+            --text-color: #3e2723;
+            --cloud-color: #546e7a;
         }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
         body {
             margin: 0;
-            font-family: 'Georgia', serif;
-            background-color: var(--paper);
-            color: var(--ink);
-            overflow-x: hidden;
-            padding-bottom: 80px;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            touch-action: none;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: var(--text-color);
         }
-        header {
-            position: sticky;
+
+        #game-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 100%;
+            max-height: 800px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            background: linear-gradient(to bottom, #fffdf5, #f0efe9);
+            border: 2px solid var(--text-color);
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .ui-layer {
+            position: absolute;
             top: 0;
-            background: var(--paper);
-            padding: 16px;
-            z-index: 10;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        .brand {
+
+        .hud {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
             font-size: 24px;
             font-weight: bold;
-            color: var(--amber);
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .search-box {
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px 16px;
-            width: 100%;
-            font-size: 16px;
-            font-family: sans-serif;
-            color: var(--ink);
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        .search-box:focus { border-color: var(--amber); }
-
-        .section-title {
-            padding: 24px 16px 8px;
-            font-size: 18px;
-            font-weight: bold;
-            opacity: 0.8;
+            color: var(--primary-red);
+            text-shadow: 1px 1px 0px var(--primary-gold);
         }
 
-        /* Map Panel */
-        .map-container {
-            margin: 0 16px;
-            height: 220px;
-            background: #e5e3db;
-            border-radius: 16px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: var(--shadow);
-            cursor: grab;
-        }
-        .map-grid {
-            width: 200%;
-            height: 200%;
-            background-image:
-                linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
+        .screen {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            transition: transform 0.5s ease-out;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(253, 251, 247, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            pointer-events: auto;
+            transition: opacity 0.3s;
         }
-        .map-marker {
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: var(--primary-red);
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 4px solid var(--primary-gold);
+            padding-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #5d4037;
+        }
+
+        button {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 2px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #b71c1c;
+            transition: transform 0.1s, box-shadow 0.1s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #b71c1c;
+        }
+
+        button:hover {
+            background-color: #e53935;
+        }
+
+        .stat-value {
+            color: var(--primary-gold);
+            text-shadow: 1px 1px 0 #3e2723;
+        }
+
+        /* Decoration lines */
+        .corner {
             position: absolute;
             width: 20px;
             height: 20px;
-            background: var(--amber);
-            border-radius: 50%;
-            box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.3);
-            animation: pulse 2s infinite;
+            border: 4px solid var(--primary-red);
+            pointer-events: none;
         }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(217, 119, 6, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0); }
-        }
+        .tl { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+        .tr { top: 10px; right: 10px; border-left: none; border-bottom: none; }
+        .bl { bottom: 10px; left: 10px; border-right: none; border-top: none; }
+        .br { bottom: 10px; right: 10px; border-left: none; border-top: none; }
 
-        /* Cards */
-        .scroll-row {
-            display: flex;
-            overflow-x: auto;
-            padding: 0 16px;
-            gap: 16px;
-            scrollbar-width: none;
-        }
-        .scroll-row::-webkit-scrollbar { display: none; }
-
-        .card {
-            min-width: 280px;
-            background: #fff;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            transition: transform 0.2s;
-        }
-        .card:active { transform: scale(0.98); }
-        .card-img {
-            height: 140px;
-            background: #eee;
-            position: relative;
-        }
-        .card-img::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, #d4a373 0%, #faedcd 100%);
-            opacity: 0.8;
-        }
-        .card-body { padding: 16px; }
-        .card-tag {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--amber);
-            font-weight: bold;
-            margin-bottom: 4px;
-            font-family: sans-serif;
-        }
-        .card-title {
-            font-size: 18px;
-            margin: 0 0 8px;
-        }
-        .card-desc {
-            font-size: 14px;
-            color: #666;
-            margin: 0 0 16px;
-            line-height: 1.4;
-            font-family: sans-serif;
-        }
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background: var(--ink);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            text-align: center;
-        }
-        .btn:active { background: var(--amber); }
-
-        /* Bottom Nav */
-        nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: #fff;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            z-index: 20;
-        }
-        .nav-item {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #999;
-            text-align: center;
-            cursor: pointer;
-        }
-        .nav-item.active { color: var(--amber); font-weight: bold; }
-        .nav-icon { display: block; height: 20px; width: 20px; margin: 0 auto 4px; background: currentColor; mask-size: cover; -webkit-mask-size: contain; }
-
-        /* SVG Icons */
-        .icon-home { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>'); }
-        .icon-map { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>'); }
-        .icon-list { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>'); }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="brand">Daybreak Beijing</div>
-    <input type="text" class="search-box" placeholder="Search for hutongs, temples, tea...">
-</header>
+    <div id="game-container">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
 
-<div class="section-title">Your Location</div>
-<div class="map-container" id="map">
-    <div class="map-grid" id="mapGrid"></div>
-    <div class="map-marker" style="top: 40%; left: 45%;"></div>
-    <div class="map-marker" style="top: 60%; left: 70%;"></div>
-    <div class="map-marker" style="top: 30%; left: 20%;"></div>
-</div>
+        <canvas id="gameCanvas"></canvas>
 
-<div class="section-title">Curated Itineraries</div>
-<div class="scroll-row">
-    <div class="card">
-        <div class="card-img" style="background: linear-gradient(to bottom, #fcd34d, #f59e0b);"></div>
-        <div class="card-body">
-            <div class="card-tag">Imperial History</div>
-            <h3 class="card-title">The Forbidden City</h3>
-            <p class="card-desc">Step back into the dynastic past. A comprehensive walking tour through the heart of power.</p>
-            <button class="btn" onclick="addToItinerary('Forbidden City')">Add to Plan</button>
+        <div class="ui-layer">
+            <div class="hud">
+                <div id="scoreDisplay">Score: 0</div>
+                <div id="timeDisplay">Time: 30</div>
+            </div>
+        </div>
+
+        <div id="startScreen" class="screen">
+            <h1>Lantern Sprint</h1>
+            <p>Catch the glowing lanterns.<br>Avoid the rain clouds.<br>Use Arrow Keys or Touch sides.</p>
+            <button id="startBtn">Start Run</button>
+        </div>
+
+        <div id="gameOverScreen" class="screen hidden">
+            <h1>Time Up!</h1>
+            <p>Final Score: <span id="finalScore" class="stat-value">0</span></p>
+            <button id="restartBtn">Try Again</button>
         </div>
     </div>
-    <div class="card">
-        <div class="card-img" style="background: linear-gradient(to bottom, #a78bfa, #7c3aed);"></div>
-        <div class="card-body">
-            <div class="card-tag">Hutong Life</div>
-            <h3 class="card-title">Narrow Alleys</h3>
-            <p class="card-desc">Experience the soul of Beijing. Tea houses, pigeons, and traditional courtyard homes.</p>
-            <button class="btn" onclick="addToItinerary('Hutong Tour')">Add to Plan</button>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-img" style="background: linear-gradient(to bottom, #f87171, #b91c1c);"></div>
-        <div class="card-body">
-            <div class="card-tag">Culinary</div>
-            <h3 class="card-title">Roast Duck Tour</h3>
-            <p class="card-desc">From Peking Duck to street snacks. The edible history of the capital.</p>
-            <button class="btn" onclick="addToItinerary('Food Tour')">Add to Plan</button>
-        </div>
-    </div>
-</div>
 
-<div class="section-title">Nearby Highlights</div>
-<div class="scroll-row">
-    <div class="card">
-        <div class="card-img" style="background: linear-gradient(to bottom, #9ca3af, #4b5563);"></div>
-        <div class="card-body">
-            <div class="card-tag">Architecture</div>
-            <h3 class="card-title">Temple of Heaven</h3>
-            <p class="card-desc">Imperial ritual architecture. Witness locals practicing Tai Chi at sunrise.</p>
-            <button class="btn">View Details</button>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-img" style="background: linear-gradient(to bottom, #34d399, #059669);"></div>
-        <div class="card-body">
-            <div class="card-tag">Nature</div>
-            <h3 class="card-title">Jingshan Park</h3>
-            <p class="card-desc">The best panoramic view of the central axis. Perfect for sunset photography.</p>
-            <button class="btn">View Details</button>
-        </div>
-    </div>
-</div>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const startScreen = document.getElementById('startScreen');
+        const gameOverScreen = document.getElementById('gameOverScreen');
+        const finalScoreEl = document.getElementById('finalScore');
 
-<nav>
-    <div class="nav-item active">
-        <div class="nav-icon icon-home"></div>
-        Home
-    </div>
-    <div class="nav-item">
-        <div class="nav-icon icon-map"></div>
-        Map
-    </div>
-    <div class="nav-item">
-        <div class="nav-icon icon-list"></div>
-        Plan
-    </div>
-</nav>
+        let gameRunning = false;
+        let score = 0;
+        let timeLeft = 30;
+        let lastTime = 0;
+        let spawnTimer = 0;
+        let difficulty = 1;
 
-<script>
-    const map = document.getElementById('map');
-    const grid = document.getElementById('mapGrid');
-    let isDragging = false;
-    let startX, startY, translateX = 0, translateY = 0;
+        // Game Objects
+        const player = {
+            x: 0, y: 0, width: 50, height: 70, speed: 0, targetX: 0, color: '#d32f2f'
+        };
+        let items = []; // Lanterns and Clouds
+        let particles = [];
 
-    map.addEventListener('mousedown', startDrag);
-    map.addEventListener('touchstart', startDrag);
-    map.addEventListener('mouseup', endDrag);
-    map.addEventListener('mouseleave', endDrag);
-    map.addEventListener('touchend', endDrag);
-    map.addEventListener('mousemove', drag);
-    map.addEventListener('touchmove', drag);
+        // Input State
+        const keys = { ArrowLeft: false, ArrowRight: false };
 
-    function startDrag(e) {
-        isDragging = true;
-        startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-        startY = e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
-        map.style.cursor = 'grabbing';
-    }
+        // Setup Canvas Size
+        function resize() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            player.y = canvas.height - 100;
+            if (!gameRunning) {
+                player.x = canvas.width / 2;
+            }
+        }
+        window.addEventListener('resize', resize);
+        resize();
 
-    function endDrag() {
-        isDragging = false;
-        map.style.cursor = 'grab';
-    }
+        // Input Handling
+        window.addEventListener('keydown', (e) => { if(keys.hasOwnProperty(e.code)) keys[e.code] = true; });
+        window.addEventListener('keyup', (e) => { if(keys.hasOwnProperty(e.code)) keys[e.code] = false; });
 
-    function drag(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-        const y = e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
-        const walkX = (x - startX) * 1.5;
-        const walkY = (y - startY) * 1.5;
-        grid.style.transform = `translate(${walkX}px, ${walkY}px)`;
-    }
+        // Touch Support
+        canvas.addEventListener('touchstart', handleTouch);
+        canvas.addEventListener('touchmove', handleTouch);
+        canvas.addEventListener('touchend', () => {
+            player.targetX = player.x;
+        });
 
-    function addToItinerary(place) {
-        alert("Added " + place + " to your Daybreak itinerary.");
-    }
+        function handleTouch(e) {
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const touchX = e.touches[0].clientX - rect.left;
+            player.targetX = touchX;
+        }
 
-    document.querySelector('.nav-item').addEventListener('click', function() {
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        this.classList.add('active');
-    });
-</script>
+        // Start / Restart
+        document.getElementById('startBtn').addEventListener('click', startGame);
+        document.getElementById('restartBtn').addEventListener('click', startGame);
 
+        function startGame() {
+            gameRunning = true;
+            score = 0;
+            timeLeft = 30;
+            items = [];
+            particles = [];
+            difficulty = 1;
+            player.x = canvas.width / 2;
+            player.targetX = player.x;
+            scoreDisplay.textContent = `Score: 0`;
+            timeDisplay.textContent = `Time: 30`;
+            startScreen.classList.add('hidden');
+            gameOverScreen.classList.add('hidden');
+            lastTime = performance.now();
+            requestAnimationFrame(gameLoop);
+
+            // Start Timer
+            const timerInterval = setInterval(() => {
+                if (!gameRunning) {
+                    clearInterval(timerInterval);
+                    return;
+                }
+                timeLeft--;
+                timeDisplay.textContent = `Time: ${timeLeft}`;
+                difficulty = 1 + (30 - timeLeft) * 0.05;
+                if (timeLeft <= 0) endGame();
+            }, 1000);
+        }
+
+        function endGame() {
+            gameRunning = false;
+            finalScoreEl.textContent = score;
+            gameOverScreen.classList.remove('hidden');
+        }
+
+        function spawnItem() {
+            const isCloud = Math.random() > 0.7; // 30% chance for cloud
+            const size = isCloud ? 60 : 40;
+            const x = Math.random() * (canvas.width - size);
+            items.push({
+                x: x,
+                y: -50,
+                width: size,
+                height: size,
+                speed: (Math.random() * 3 + 2) * difficulty,
+                type: isCloud ? 'cloud' : 'lantern',
+                angle: 0
+            });
+        }
+
+        function createParticles(x, y, color) {
+            for (let i = 0; i < 8; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: (Math.random() - 0.5) * 10,
+                    life: 1.0,
+                    color: color
+                });
+            }
+        }
+
+        function drawPlayer() {
+            // Smooth movement towards target
+            player.x += (player.targetX - player.x) * 0.2;
+
+            // Clamp
+            if (player.x < player.width/2) player.x = player.width/2;
+            if (player.x > canvas.width - player.width/2) player.x = canvas.width - player.width/2;
+
+            ctx.save();
+            ctx.translate(player.x, player.y);
+
+            // Handle keyboard override
+            if (keys.ArrowLeft) player.targetX -= 8;
+            if (keys.ArrowRight) player.targetX += 8;
+
+            // Stick
+            ctx.fillStyle = '#8d6e63';
+            ctx.fillRect(-2, -10, 4, 20);
+
+            // Body (Lantern shape)
+            ctx.fillStyle = player.color;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 20, 30, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Shine
+            ctx.fillStyle = '#ffeb3b';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 12, 20, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Glow
+            ctx.shadowColor = '#ffeb3b';
+            ctx.shadowBlur = 20;
+            ctx.fillStyle = 'rgba(255, 235, 59, 0.5)';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 15, 25, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawItems() {
+            items.forEach((item, index) => {
+                ctx.save();
+                ctx.translate(item.x + item.width/2, item.y + item.height/2);
+
+                if (item.type === 'lantern') {
+                    // Draw Lantern
+                    item.angle += 0.05;
+                    ctx.rotate(Math.sin(item.angle) * 0.2);
+
+                    // Rope
+                    ctx.strokeStyle = '#5d4037';
+                    ctx.beginPath();
+                    ctx.moveTo(0, -item.height/2 - 10);
+                    ctx.lineTo(0, -item.height/2);
+                    ctx.stroke();
+
+                    // Red Shell
+                    ctx.fillStyle = '#d32f2f';
+                    ctx.beginPath();
+                    ctx.rect(-15, -20, 30, 40);
+                    ctx.fill();
+
+                    // Gold Caps
+                    ctx.fillStyle = '#ffb300';
+                    ctx.fillRect(-15, -20, 30, 5);
+                    ctx.fillRect(-15, 15, 30, 5);
+
+                    // Inner Glow
+                    ctx.shadowColor = '#ffeb3b';
+                    ctx.shadowBlur = 15;
+                    ctx.fillStyle = '#ffeb3b';
+                    ctx.fillRect(-10, -15, 20, 30);
+
+                } else {
+                    // Draw Cloud
+                    ctx.fillStyle = '#78909c';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 25, 0, Math.PI*2);
+                    ctx.arc(-20, 5, 20, 0, Math.PI*2);
+                    ctx.arc(20, 5, 20, 0, Math.PI*2);
+                    ctx.fill();
+
+                    // Darker underbelly
+                    ctx.fillStyle = '#455a64';
+                    ctx.beginPath();
+                    ctx.arc(0, 5, 25, 0, Math.PI, true);
+                    ctx.fill();
+                }
+                ctx.restore();
+            });
+        }
+
+        function drawParticles() {
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.life;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 4 * p.life, 0, Math.PI*2);
+                ctx.fill();
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= 0.05;
+                if (p.life <= 0) particles.splice(i, 1);
+            }
+            ctx.globalAlpha = 1.0;
+        }
+
+        function update(dt) {
+            // Spawning
+            spawnTimer += dt;
+            if (spawnTimer > (1000 / difficulty)) {
+                spawnItem();
+                spawnTimer = 0;
+            }
+
+            // Item Physics
+            for (let i = items.length - 1; i >= 0; i--) {
+                const item = items[i];
+                item.y += item.speed;
+
+                // Collision
+                const dx = (player.x) - (item.x + item.width/2);
+                const dy = (player.y) - (item.y + item.height/2);
+                const dist = Math.sqrt(dx*dx + dy*dy);
+
+                if (dist < 45) { // Hit
+                    if (item.type === 'lantern') {
+                        score += 10;
+                        scoreDisplay.textContent = `Score: ${score}`;
+                        createParticles(player.x, player.y, '#ffeb3b');
+                    } else {
+                        score -= 20;
+                        scoreDisplay.textContent = `Score: ${score}`;
+                        createParticles(player.x, player.y, '#546e7a');
+                        // Visual shake or flash could go here
+                    }
+                    items.splice(i, 1);
+                    continue;
+                }
+
+                // Remove off screen
+                if (item.y > canvas.height + 50) {
+                    items.splice(i, 1);
+                }
+            }
+        }
+
+        function gameLoop(timestamp) {
+            if (!gameRunning) return;
+
+            const dt = timestamp - lastTime;
+            lastTime = timestamp;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            update(dt);
+            drawItems();
+            drawPlayer();
+            drawParticles();
+
+            requestAnimationFrame(gameLoop);
+        }
+    </script>
 </body>
 </html>

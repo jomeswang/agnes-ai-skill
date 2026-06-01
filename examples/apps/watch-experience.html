@@ -3,284 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aureline | Timeless Excellence</title>
+    <title>Golden Hour Stories | Agnes Image + Video</title>
     <style>
         :root {
-            --ivory: #FDFBF7;
-            --champagne: #F7E7CE;
-            --gold: #C5A059;
-            --charcoal: #2C2C2C;
-            --serif: 'Georgia', 'Times New Roman', serif;
+            --cream: #F9F7F2;
+            --blush: #F2E6E5;
+            --gold: #C5A065;
+            --gold-dark: #A68248;
+            --text: #2C2824;
+            --font-serif: 'Times New Roman', Times, serif;
+            --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            background-color: var(--ivory);
-            color: var(--charcoal);
-            font-family: 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--cream);
+            color: var(--text);
+            font-family: var(--font-sans);
             line-height: 1.6;
             overflow-x: hidden;
         }
-
-        h1, h2, h3 { font-family: var(--serif); font-weight: 400; letter-spacing: 0.02em; }
-
-        /* Utility */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        .text-center { text-align: center; }
-        .gold-text { color: var(--gold); }
-
-        /* Animations */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .fade-in { animation: fadeIn 1.2s ease-out forwards; }
-        .delay-1 { animation-delay: 0.3s; opacity: 0; }
-        .delay-2 { animation-delay: 0.6s; opacity: 0; }
-
-        /* Header */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        h1, h2, h3, h4 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            margin: 0 0 20px 0;
+            letter-spacing: -0.02em;
+        }
+        .btn {
+            display: inline-block;
+            background-color: var(--gold);
+            color: #fff;
+            padding: 18px 40px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            transition: background 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: var(--gold-dark);
+        }
         header {
-            padding: 2rem 0;
+            padding: 40px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .logo { font-size: 1.5rem; letter-spacing: 0.1em; font-weight: bold; font-family: var(--serif); }
-        nav a { text-decoration: none; color: var(--charcoal); margin-left: 2rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; transition: color 0.3s; }
-        nav a:hover { color: var(--gold); }
-
-        /* Hero Section */
-        .hero {
-            height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            background: radial-gradient(circle at center, #ffffff 0%, var(--ivory) 70%);
-            position: relative;
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
         }
-        .hero h1 { font-size: 4.5rem; margin-bottom: 1.5rem; color: var(--charcoal); }
-        .hero p { font-size: 1.2rem; color: #666; max-width: 600px; margin-bottom: 3rem; }
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            border: 1px solid var(--charcoal);
-            color: var(--charcoal);
+        .nav-link {
+            color: var(--text);
             text-decoration: none;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            font-size: 0.8rem;
-            transition: all 0.4s ease;
-            background: transparent;
-            cursor: pointer;
         }
-        .btn:hover { background: var(--charcoal); color: var(--ivory); }
-
-        /* Watch Visualization */
-        .watch-visual {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            border: 1px solid var(--champagne);
-            box-shadow: 0 0 50px rgba(197, 160, 89, 0.1);
-            margin-bottom: 2rem;
-            position: relative;
-            display: flex;
+        .hero {
+            padding: 120px 0;
+            text-align: center;
+            background: linear-gradient(to bottom, var(--cream), var(--blush));
+        }
+        .hero h1 {
+            font-size: 5rem;
+            line-height: 0.95;
+            color: var(--text);
+            margin-bottom: 30px;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 50px;
+            color: #665c56;
+            font-family: var(--font-serif);
+            font-style: italic;
+        }
+        .campaign-narrative {
+            padding: 100px 0;
+            border-top: 1px solid #E5DFD6;
+        }
+        .narrative-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
             align-items: center;
-            justify-content: center;
         }
-        .watch-dial {
-            width: 260px;
-            height: 260px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #fff 0%, var(--champagne) 100%);
+        .narrative-text h2 {
+            font-size: 3rem;
+            line-height: 1.1;
+        }
+        .narrative-text p {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            color: #555;
+        }
+        .narrative-visual {
+            height: 500px;
+            background-color: var(--gold);
             position: relative;
+            overflow: hidden;
         }
-        .hand {
+        .narrative-visual::after {
+            content: '';
             position: absolute;
-            bottom: 50%;
-            left: 50%;
-            background: var(--charcoal);
-            transform-origin: bottom center;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(197, 160, 101, 0.4), rgba(44, 40, 36, 0.2));
         }
-        .hour { width: 4px; height: 60px; transform: translateX(-50%) rotate(45deg); }
-        .minute { width: 2px; height: 90px; transform: translateX(-50%) rotate(180deg); background: var(--gold); }
-        .center-dot { width: 10px; height: 10px; background: var(--charcoal); border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-
-        /* Craftsmanship Section */
-        .craftsmanship { padding: 8rem 0; background-color: #fff; }
-        .section-title { font-size: 2.5rem; margin-bottom: 4rem; text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; }
-        .card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
-        .card p { color: #555; font-size: 0.95rem; }
-        .divider { height: 1px; width: 50px; background: var(--gold); margin: 1.5rem 0; }
-
-        /* Movement Section */
-        .movement { padding: 8rem 0; background-color: var(--ivory); position: relative; }
-        .movement-content { display: flex; align-items: center; gap: 4rem; flex-wrap: wrap; }
-        .movement-text { flex: 1; min-width: 300px; }
-        .movement-visual {
-            flex: 1;
-            min-width: 300px;
-            height: 400px;
-            border: 1px solid var(--champagne);
+        .panels {
+            padding: 120px 0;
+            background-color: var(--blush);
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .section-header h3 {
+            font-size: 2.5rem;
+        }
+        .section-header p {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--gold-dark);
+        }
+        .panel-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .panel {
+            background-color: var(--cream);
+            padding: 40px;
+            transition: transform 0.4s ease;
+        }
+        .panel:hover {
+            transform: translateY(-10px);
+        }
+        .panel-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--gold);
+            margin-bottom: 30px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            color: white;
+            font-size: 1.5rem;
+            font-family: var(--font-serif);
         }
-        .gear {
-            width: 150px;
-            height: 150px;
-            border: 2px dashed var(--gold);
-            border-radius: 50%;
-            animation: spin 20s linear infinite;
+        .panel h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .panel p {
+            font-size: 0.95rem;
+            color: #666;
+        }
+        .social-proof {
+            padding: 80px 0;
+            background-color: var(--cream);
+            text-align: center;
+        }
+        .proof-strip {
             display: flex;
-            align-items: center;
             justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+            flex-wrap: wrap;
         }
-        .gear-inner {
-            width: 100px;
-            height: 100px;
-            border: 1px solid var(--charcoal);
-            border-radius: 50%;
-            animation: spinReverse 10s linear infinite;
+        .proof-item {
+            text-align: center;
         }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes spinReverse { 100% { transform: rotate(-360deg); } }
-
-        /* Footer */
-        footer { padding: 4rem 0; border-top: 1px solid var(--champagne); background-color: #fff; }
-        .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; }
-        .footer-col h4 { margin-bottom: 1rem; font-family: var(--serif); }
-        .footer-col a { display: block; color: #666; text-decoration: none; margin-bottom: 0.5rem; font-size: 0.9rem; }
-        .footer-col a:hover { color: var(--gold); }
-        .copyright { margin-top: 4rem; font-size: 0.8rem; color: #999; text-align: center; }
-
+        .proof-number {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            color: var(--gold);
+            display: block;
+            line-height: 1;
+        }
+        .proof-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 10px;
+            display: block;
+            color: #888;
+        }
+        .cta-section {
+            padding: 150px 0;
+            background-color: var(--text);
+            color: var(--cream);
+            text-align: center;
+        }
+        .cta-section h2 {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 30px;
+        }
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            color: #ccc;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-section .btn {
+            background-color: var(--gold);
+        }
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+            background-color: var(--cream);
+        }
         @media (max-width: 768px) {
             .hero h1 { font-size: 3rem; }
-            .grid { gap: 2rem; }
-            .movement-content { flex-direction: column-reverse; }
+            .narrative-grid { grid-template-columns: 1fr; }
+            .panel-grid { grid-template-columns: 1fr; }
+            .proof-strip { gap: 30px; }
+            .container { padding: 0 20px; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <header class="fade-in">
-            <div class="logo">AURELINE</div>
+        <header>
+            <div class="logo">AGNES + VIDEO</div>
             <nav>
-                <a href="#collection">Collection</a>
-                <a href="#craftsmanship">Craftsmanship</a>
-                <a href="#contact">Contact</a>
+                <a href="#" class="nav-link">Campaign</a>
             </nav>
         </header>
     </div>
 
     <section class="hero">
-        <div class="container text-center">
-            <div class="watch-visual fade-in">
-                <div class="watch-dial">
-                    <div class="hand hour"></div>
-                    <div class="hand minute"></div>
-                    <div class="center-dot"></div>
-                </div>
-            </div>
-            <h1 class="fade-in delay-1">The Architecture of Light</h1>
-            <p class="fade-in delay-2">Aureline redefines the passage of time with a synthesis of classical horology and modern minimalism. Each piece is a study in restraint and elegance.</p>
-            <a href="#" class="btn fade-in delay-2">Discover the Collection</a>
+        <div class="container">
+            <h1>GOLDEN HOUR<br>STORIES</h1>
+            <p>A curated visual journey capturing the ephemeral beauty of fleeting moments. Experience luxury through light.</p>
+            <a href="#cta" class="btn">View Collection</a>
         </div>
     </section>
 
-    <section id="craftsmanship" class="craftsmanship">
+    <section class="campaign-narrative">
         <div class="container">
-            <h2 class="section-title">Meticulous Craft</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Swiss Movement</h3>
-                    <div class="divider"></div>
-                    <p>At the heart of every Aureline lies a hand-assembled caliber, tested for precision in extreme conditions and certified for longevity.</p>
+            <div class="narrative-grid">
+                <div class="narrative-text">
+                    <h2>THE ALCHEMY OF LIGHT</h2>
+                    <p>Golden Hour Stories is not merely a collection; it is an immersive editorial experience. We explore the intersection of high fashion and natural brilliance, where every frame tells a story of warmth, elegance, and timeless appeal.</p>
+                    <p>Our creative drop features exclusive imagery and cinematic video clips designed to elevate your digital presence. Crafted for the discerning eye, this campaign redefines the standard of premium content.</p>
+                    <a href="#" class="nav-link" style="border-bottom: 1px solid var(--text); padding-bottom: 5px;">Read the Manifesto</a>
                 </div>
-                <div class="card">
-                    <h3>24K Gold Accents</h3>
-                    <div class="divider"></div>
-                    <p>Our signature champagne hue is achieved through a proprietary electroplating process, ensuring a luster that deepens with time.</p>
-                </div>
-                <div class="card">
-                    <h3>Sapphire Crystal</h3>
-                    <div class="divider"></div>
-                    <p>Multi-layered anti-reflective sapphire protects the dial, offering flawless visibility and resilience against the rigors of daily wear.</p>
-                </div>
+                <div class="narrative-visual"></div>
             </div>
         </div>
     </section>
 
-    <section class="movement">
+    <section class="panels">
         <div class="container">
-            <div class="movement-content">
-                <div class="movement-visual">
-                    <div class="gear">
-                        <div class="gear-inner"></div>
-                    </div>
+            <div class="section-header">
+                <p>The Collection</p>
+                <h3>THREE PERSPECTIVES</h3>
+            </div>
+            <div class="panel-grid">
+                <div class="panel">
+                    <div class="panel-icon">I</div>
+                    <h4>Visual Essays</h4>
+                    <p>High-resolution editorial photography capturing the essence of sunset hues and shadow play. Perfect for digital campaigns and print inspiration.</p>
                 </div>
-                <div class="movement-text">
-                    <h2>The Inner Workings</h2>
-                    <div class="divider"></div>
-                    <p>Horology is the poetry of motion. We believe that the mechanism should be as beautiful as the result. Our open-heart design elements reveal the rhythmic dance of the balance wheel, a constant reminder of the kinetic energy that drives your day.</p>
-                    <br>
-                    <p>Every gear, every screw, and every jewel is finished by hand under magnification.</p>
+                <div class="panel">
+                    <div class="panel-icon">II</div>
+                    <h4>Cinematic Loops</h4>
+                    <p>Seamless video loops designed to bring life to static spaces. Experience motion in its most refined form, with a focus on texture and movement.</p>
+                </div>
+                <div class="panel">
+                    <div class="panel-icon">III</div>
+                    <h4>Brand Assets</h4>
+                    <p>Curated templates and overlays to integrate the Golden Hour aesthetic into your existing brand identity. Elevate your visual language instantly.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section class="social-proof">
+        <div class="container">
+            <div class="section-header">
+                <p>Impact</p>
+            </div>
+            <div class="proof-strip">
+                <div class="proof-item">
+                    <span class="proof-number" data-target="250">0</span>
+                    <span class="proof-label">Assets Included</span>
+                </div>
+                <div class="proof-item">
+                    <span class="proof-number" data-target="48">0</span>
+                    <span class="proof-label">Countries Reached</span>
+                </div>
+                <div class="proof-item">
+                    <span class="proof-number" data-target="12">0</span>
+                    <span class="proof-label">Industry Awards</span>
+                </div>
+                <div class="proof-item">
+                    <span class="proof-number" data-target="100">0</span>
+                    <span class="proof-label">Percent Premium</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section">
+        <div class="container">
+            <h2>ACQUIRE THE DROP</h2>
+            <p>Join the list of creative directors and agencies transforming their visual narratives. Limited availability for the inaugural release.</p>
+            <a href="#" class="btn">Get Access Now</a>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-col">
-                    <h4>AURELINE</h4>
-                    <a href="#">Heritage</a>
-                    <a href="#">Atelier</a>
-                    <a href="#">Sustainability</a>
-                </div>
-                <div class="footer-col">
-                    <h4>CLIENT SERVICES</h4>
-                    <a href="#">Contact Us</a>
-                    <a href="#">Find a Retailer</a>
-                    <a href="#">Care Guide</a>
-                </div>
-                <div class="footer-col">
-                    <h4>FOLLOW US</h4>
-                    <a href="#">Instagram</a>
-                    <a href="#">LinkedIn</a>
-                </div>
-            </div>
-            <div class="copyright">
-                &copy; 2023 Aureline Watch Co. All rights reserved.
-            </div>
+            <p>&copy; 2023 Agnes Image + Video. All rights reserved. Designed for Excellence.</p>
         </div>
     </footer>
 
     <script>
-        // Simple script to sync hands
-        function updateTime() {
-            const now = new Date();
-            const seconds = now.getSeconds();
-            const minutes = now.getMinutes();
-            const hours = now.getHours();
+        document.addEventListener('DOMContentLoaded', function() {
+            const counters = document.querySelectorAll('.proof-number');
+            const speed = 200;
 
-            const hourDeg = (hours % 12) * 30 + minutes * 0.5;
-            const minuteDeg = minutes * 6 + seconds * 0.1;
+            const animateCounters = () => {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / speed;
 
-            const hourHand = document.querySelector('.hour');
-            const minuteHand = document.querySelector('.minute');
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(animateCounters, 20);
+                    } else {
+                        counter.innerText = target;
+                    }
+                });
+            };
 
-            if(hourHand && minuteHand) {
-                hourHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
-                minuteHand.style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            const proofSection = document.querySelector('.social-proof');
+            if (proofSection) {
+                observer.observe(proofSection);
             }
-        }
-
-        setInterval(updateTime, 1000);
-        updateTime();
+        });
     </script>
 </body>
 </html>
