@@ -88,7 +88,10 @@ The official docs also give each model fairly different best practices:
 The strongest outside prompt libraries all do the same three things well:
 lead with a preview, keep the prompt compact enough to scan, and organize
 examples by outcome instead of by raw API parameter lists. This gallery follows
-that pattern with 9 compact cases generated with Agnes on June 1, 2026.
+that pattern with 9 compact cases regenerated with Agnes on June 1, 2026. The
+image prompts were tightened toward the shorter, more editorial style seen in
+`awesome-gpt-image-2`, while the lead video prompt uses a more shot-structured
+format inspired by the cinematic entries in `awesome-seedance`.
 
 ### Image Cases
 
@@ -96,9 +99,9 @@ that pattern with 9 compact cases generated with Agnes on June 1, 2026.
 
 | Preview | Case | Model | Prompt recipe |
 | --- | --- | --- | --- |
-| [![Cyberpunk bridge](./assets/images/cyberpunk-bridge.jpg)](./assets/images/cyberpunk-bridge.jpg) | Neon bridge editorial | `agnes-image-2.1-flash` | Rain-soaked Tokyo skybridge, cyan-magenta neon, umbrella silhouettes, reflective pavement, cinematic anime realism, centered leading lines. |
-| [![Perfume product ad](./assets/images/perfume-product.jpg)](./assets/images/perfume-product.jpg) | Luxury perfume hero | `agnes-image-2.1-flash` | Perfume bottle on a crystal pedestal, frozen water crown, champagne highlights, premium beauty campaign lighting, macro product photography. |
-| [![Chocolate latte infographic](./assets/images/latte-infographic.jpg)](./assets/images/latte-infographic.jpg) | Mobile infographic card | `agnes-image-2.1-flash` | Step-by-step chocolate latte infographic, editorial grid, tactile ingredients, crisp type-safe layout zones, warm cafe palette, mobile-first readability. |
+| [![Y2K golden hour portrait](./assets/images/y2k-golden-hour.png)](./assets/images/y2k-golden-hour.png) | Y2K golden hour portrait | `agnes-image-2.1-flash` | Candid blonde portrait, baby-pink velour tracksuit, butterfly clips, glossy lips, palm trees, warm golden hour, real skin texture, soft film grain. |
+| [![Pencil editorial fashion](./assets/images/pencil-editorial-fashion.png)](./assets/images/pencil-editorial-fashion.png) | Pencil editorial fashion | `agnes-image-2.1-flash` | Minimal monochrome pencil-sketch fashion portrait, round sunglasses, rolled white shirt, denim overalls, combat boots, burnt-orange circle, indie magazine composition. |
+| [![Brand envelope perfume ad](./assets/images/brand-envelope-perfume.png)](./assets/images/brand-envelope-perfume.png) | Brand-envelope perfume ad | `agnes-image-2.1-flash` | Dusty-rose brand world, travertine pedestal, translucent perfume bottle, matte cream paper curves, warm studio light, quiet-luxury beauty campaign. |
 
 ### Video Cases
 
@@ -108,8 +111,8 @@ The preview thumbnails below link to the generated `.mp4` files.
 
 | Preview | Case | Model | Prompt recipe |
 | --- | --- | --- | --- |
-| [![Cyberpunk bridge motion](./assets/video-previews/bridge-pushin-clean.png)](./assets/videos/bridge-pushin.mp4) | Neon bridge push-in | `agnes-video-v2.0` | Slow dolly-in through a rainy elevated walkway in neon Tokyo, umbrellas crossing frame, misty atmosphere, glossy reflections, cinematic ad pacing. |
-| [![Perfume motion](./assets/video-previews/perfume-motion.png)](./assets/videos/perfume-motion.mp4) | Luxury product motion | `agnes-video-v2.0` | Macro fragrance film with a crystal plinth, suspended splash, glitter particles, warm gold bokeh, premium commercial reveal with controlled parallax. |
+| [![Luxury perfume 10 second film](./assets/video-previews/luxury-perfume-10s.jpg)](./assets/videos/luxury-perfume-10s.mp4) | Luxury perfume 10-second film | `agnes-video-v2.0` | Four-beat product commercial: macro bottle, slow orbit splash, atomizer push-in, full hero reveal, champagne-gold light, realistic premium materials. |
+| [![FPV forest waterfall](./assets/video-previews/forest-waterfall.jpg)](./assets/videos/forest-waterfall.mp4) | FPV waterfall reveal | `agnes-video-v2.0` | Glide through dense pine forest and break into a hidden waterfall clearing, natural speed ramp feel, tactile air, cinematic outdoor travel energy. |
 | [![Rural cooking motion](./assets/video-previews/rural-cooking.png)](./assets/videos/rural-cooking.mp4) | Slow living food moment | `agnes-video-v2.0` | Sunlit kitchen counter by a window, hands lift a ripe tomato from fresh herbs, shallow depth of field, tactile domestic realism, calm editorial motion. |
 
 ### App Cases
@@ -121,9 +124,9 @@ Single-file HTML demos generated from Agnes text prompts and saved in
 
 | Preview | Case | Model | Prompt recipe |
 | --- | --- | --- | --- |
-| [![Cinematic landing page](./assets/apps/cinematic-ai-landing.jpg)](./examples/apps/cinematic-ai-landing.html) | Cinematic AI launch page | `agnes-2.0-flash` | One-file launch page for an AI film tool, oversized editorial typography, dramatic gradients, crisp CTA hierarchy, premium SaaS trailer energy. |
-| [![Beijing map UI](./assets/apps/beijing-map-ui.jpg)](./examples/apps/beijing-map-ui.html) | City guide mobile UI | `agnes-2.0-flash` | Map-first Beijing guide prototype, glass cards, transit-aware bottom sheet, tactile iconography, polished travel-product interactions. |
-| [![Luxury watch landing page](./assets/apps/watch-experience.jpg)](./examples/apps/watch-experience.html) | Luxury watch microsite | `agnes-2.0-flash` | Black-and-gold watch storytelling page, serif headlines, museum spacing, restrained motion cues, high-end commerce presentation in one HTML file. |
+| [![Solstice Motion landing page](./assets/apps/cinematic-ai-landing.jpg)](./examples/apps/cinematic-ai-landing.html) | Solstice Motion studio page | `agnes-2.0-flash` | Fresh one-file editorial AI studio homepage, cream palette, serif display type, asymmetrical hero, bright premium product marketing. |
+| [![Daybreak Beijing app](./assets/apps/beijing-map-ui.jpg)](./examples/apps/beijing-map-ui.html) | Daybreak Beijing city guide | `agnes-2.0-flash` | Fresh mobile travel prototype, warm paper UI, map module, itinerary cards, premium city-guide navigation, bright tactile interactions. |
+| [![Aureline watch site](./assets/apps/watch-experience.jpg)](./examples/apps/watch-experience.html) | Aureline watch microsite | `agnes-2.0-flash` | Fresh luxury watch microsite, ivory-and-champagne palette, museum spacing, serif storytelling, bright high-end commerce presentation. |
 
 ## Why Agnes
 
