@@ -2,7 +2,20 @@
 name: agnes-ai-skill
 version: 1.0.0
 description: "Connect Agnes AI's multimodal API for text, image, and video, persist AGNES_API_KEY, and run reliable OpenAI-style Agnes workflows from one skill."
-metadata: {"openclaw":{"emoji":"sparkles"}}
+metadata:
+  openclaw:
+    emoji: "sparkles"
+    homepage: "https://github.com/jomeswang/agnes-ai-skill"
+    requires:
+      env:
+        - AGNES_API_KEY
+      bins:
+        - curl
+    primaryEnv: AGNES_API_KEY
+    envVars:
+      - name: AGNES_API_KEY
+        required: true
+        description: Agnes API key used for authenticated text, image, and video requests.
 ---
 
 # Agnes AI Skill
