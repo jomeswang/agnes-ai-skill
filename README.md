@@ -5,7 +5,7 @@
 [![Models](https://img.shields.io/badge/models-text%20%7C%20image%20%7C%20video-black)](https://agnes-ai.com/doc)
 [![Agnes AI](https://img.shields.io/badge/platform-Agnes%20AI-ff6b3d)](https://platform.agnes-ai.com/)
 
-An installable Agent Skill for Agnes AI's unified multimodal API platform.
+> One install target for Agnes AI text, image, and video APIs.
 
 > 文本、图片、视频全模态 API，一套 skill 直接接入 Agnes。
 >
@@ -25,7 +25,7 @@ This repository packages a single root `SKILL.md` so coding agents can quickly:
 The skill stays intentionally lightweight. It teaches agents how to make Agnes
 API calls successfully without copying the full docs into the repository.
 
-## Why This Skill Exists
+## Why Agnes
 
 Agnes is most interesting when one workflow needs all three layers together:
 
@@ -42,9 +42,10 @@ The supplied public writeups consistently frame Agnes as useful for:
 - ad, storyboard, and cinematic short-video iteration
 
 This skill turns that platform surface into one reusable installation target for
-Codex and other SKILL.md-compatible agents.
+Codex and other SKILL.md-compatible agents, with guidance that helps the agent
+choose the right Agnes model and authenticate cleanly.
 
-## What This Skill Covers
+## What It Does
 
 - Platform and auth flow from the Agnes quickstart docs
 - API key creation via the Agnes platform settings page
@@ -52,6 +53,16 @@ Codex and other SKILL.md-compatible agents.
 - OpenAI-style request patterns for text and image endpoints
 - Asynchronous task workflow for video generation
 - Practical use cases reinforced by the supplied public writeups
+
+## Safety Model
+
+- The skill checks for `AGNES_API_KEY` before live requests
+- If the key is missing, it points the user to the official Agnes quickstart
+  and API key page instead of guessing
+- If the user provides a key and wants it remembered, the skill persists
+  `AGNES_API_KEY` in the correct shell rc file for future sessions
+- Live payloads and response handling stay grounded in Agnes docs and real API
+  behavior, not only in marketing copy
 
 ## Install
 
@@ -101,6 +112,8 @@ for example:
   `agent-skills`, `ai-agent-skills`, `codex-skills`, `multimodal-ai`, `agnes-ai`
 - These topics improve discoverability across GitHub-linked skill directories
   and crawler-based ecosystems.
+- The repository is ready for third-party skill hub submission, including
+  ClawHub-style marketplaces that read `SKILL.md` metadata.
 
 ## Primary Sources
 
@@ -122,5 +135,6 @@ for example:
   free access to its core multimodal APIs as of June 1, 2026. Treat pricing and
   promotion details as time-sensitive and verify them in the platform if cost
   matters.
-- ClawHub publishing requires a separate ClawHub login and GitHub OAuth grant.
+- ClawHub publishing requires a separate ClawHub login or publish token plus a
+  GitHub OAuth grant.
 - This repository is released under the MIT License.

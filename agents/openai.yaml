@@ -1,4 +1,4 @@
 interface:
   display_name: "Agnes AI Skill"
-  short_description: "Use Agnes AI text, image, and video APIs with persistent auth setup"
+  short_description: "Set up Agnes auth once, then use Agnes text, image, and video APIs from one installable skill"
   default_prompt: "Use $agnes-ai-skill to set up Agnes access, persist my API key if needed, and call the right Agnes text, image, or video API."

@@ -1,6 +1,8 @@
 ---
 name: agnes-ai-skill
-description: "Use for Agnes AI platform work: setting up Agnes API access, creating or persisting an Agnes API key, calling Agnes text, image, or video models, generating images or videos, building agent workflows on Agnes, or migrating OpenAI-style requests to Agnes. Trigger whenever the user mentions Agnes AI, agnes-ai.com, Agnes API, Agnes-2.0-Flash, Agnes-Image, Agnes-Video, or wants a low-cost or free multimodal API for text, image, video, agent workflows, tool calling, frontend/code generation, marketing visuals, e-commerce image editing, or cinematic video experiments."
+version: 1.0.0
+description: "Connect Agnes AI's multimodal API for text, image, and video, persist AGNES_API_KEY, and run reliable OpenAI-style Agnes workflows from one skill."
+metadata: {"openclaw":{"emoji":"sparkles"}}
 ---
 
 # Agnes AI Skill
@@ -14,6 +16,26 @@ positions itself as offering free access to core text, image, and video APIs.
 Treat pricing and promotions as time-sensitive, but use this skill whenever the
 user wants fast multimodal prototyping, agent workflows, creative generation,
 or high-frequency iteration on Agnes.
+
+## When To Use
+
+Use this skill when:
+
+- the user mentions Agnes AI, `agnes-ai.com`, or the Agnes platform
+- the user wants one provider for text, image, and video generation
+- the user wants to test or integrate `agnes-2.0-flash`
+- the user wants Agnes image generation, image editing, or image-to-image
+- the user wants Agnes video generation, keyframes, or polling logic
+- the user wants a low-cost or free-feeling multimodal API surface for agent
+  workflows, prototyping, frontend generation, ads, e-commerce creatives, or
+  storyboard experiments
+
+Do not use this skill when:
+
+- the user is asking for non-Agnes provider setup only
+- the task does not need Agnes-specific API behavior, model names, or auth
+- you would have to guess live API behavior without checking a current Agnes
+  response first
 
 ## Source Of Truth
 
@@ -386,3 +408,31 @@ The supplied materials emphasize:
   differ
 - Do not overcomplicate the first request; validate the smallest working call
   first, then expand
+
+## Safety
+
+- Never echo a full Agnes API key back to the user after it has been supplied
+- Never continue with live Agnes requests when auth is missing or clearly
+  invalid
+- Never treat article copy or marketing claims as more authoritative than the
+  official Agnes API docs
+- Never promise pricing, limits, or "forever free" terms without noting they
+  can change over time
+- Never write the key to a project file unless the user explicitly asks for
+  that behavior
+
+## Installation
+
+With repository-aware skill installers:
+
+```bash
+npx skills add jomeswang/agnes-ai-skill
+```
+
+After installation, invoke this skill whenever Agnes setup or Agnes model usage
+comes up.
+
+## Version History
+
+- `1.0.0` - Initial public release with Agnes platform setup, persistent auth,
+  text, image, and video workflow guidance.
