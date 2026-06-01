@@ -10,9 +10,9 @@
 > 文本、图片、视频全模态 API，一套 skill 直接接入 Agnes。
 >
 > Based on the supplied June 2026 materials, Agnes publicly positioned its core
-> multimodal APIs as indefinitely free for developers and creators. Treat that
-> as time-sensitive platform messaging and verify current commercial terms in
-> the live product when cost matters.
+> multimodal APIs as broadly free for developers and creators. The live model
+> docs now also include pricing sections, so treat cost and promotion messaging
+> as time-sensitive and verify current commercial terms when spending matters.
 
 ![Agnes AI cyberpunk showcase](./assets/images/cyberpunk-bridge.jpg)
 
@@ -26,6 +26,32 @@ This repository packages a single root `SKILL.md` so coding agents can quickly:
 
 The skill stays intentionally lightweight. It teaches agents how to make Agnes
 API calls successfully without copying the full docs into the repository.
+
+## Model Guide
+
+Use the repository skill with these defaults:
+
+- `agnes-2.0-flash`
+  - chat, coding, streaming, tool calling, and agent workflows
+- `agnes-image-2.1-flash`
+  - default for new text-to-image and image-to-image work
+  - strongest fit for denser layouts, richer detail, and better semantic
+    alignment
+- `agnes-image-2.0-flash`
+  - better when you explicitly need its documented `tags: ["img2img"]` flow,
+    multi-image composition, or `seed`-based reproducibility
+- `agnes-video-v2.0`
+  - text-to-video, image-to-video, multi-image guided video, keyframes, and
+    asynchronous polling
+
+The official docs also give each model fairly different best practices:
+
+- Image 2.1 leans into high-information-density visuals and composition
+  preservation
+- Image 2.0 is more explicit about edit/composition workflows, response fields,
+  and OpenAI Images-style compatibility
+- Video 2.0 is task-based and documents multiple generation modes, task states,
+  result polling, and frame-count constraints
 
 ## Showcase
 
@@ -110,6 +136,24 @@ choose the right Agnes model and authenticate cleanly.
 - OpenAI-style request patterns for text and image endpoints
 - Asynchronous task workflow for video generation
 - Practical use cases reinforced by the supplied public writeups
+
+## Model Quick Reference
+
+| Model | Best for | Endpoint | Required fields | Special fields / caveats |
+| --- | --- | --- | --- | --- |
+| `agnes-2.0-flash` | chat, coding, streaming, tool calling, agent loops | `/v1/chat/completions` | `model`, `messages` | OpenAI-style `tools`, `tool_choice`, `stream` |
+| `agnes-image-2.1-flash` | new text-to-image, image-to-image, denser layouts, composition-preserving edits | `/v1/images/generations` | `model`, `prompt` | `size`, `extra_body.image`, `extra_body.response_format`; strongest fit for high-information-density scenes |
+| `agnes-image-2.0-flash` | edit-heavy workflows, multi-image composition, compatibility-style image flows | `/v1/images/generations` | `model`, `prompt` | often pair with `tags: ["img2img"]`; supports `seed`, `extra_body.image`, `extra_body.response_format` |
+| `agnes-video-v2.0` | text-to-video, image-to-video, multi-image guided video, keyframes | `/v1/videos` and `/v1/videos/{task_id}` | `model`, `prompt` | asynchronous task workflow; mind `num_frames`, `frame_rate`, `extra_body.image`, `extra_body.mode` |
+
+## Pricing / Operational Caveats
+
+- The official Image 2.0, Image 2.1, and Video 2.0 docs currently include
+  pricing sections.
+- Some public writeups still frame Agnes as broadly free or indefinitely free.
+- The Video 2.0 docs are also operationally time-sensitive: the same page can
+  mix concrete price figures with “pricing to be announced” style notes.
+- Treat all pricing, free-tier, and billing claims as live-doc verified only.
 
 ## Safety Model
 
