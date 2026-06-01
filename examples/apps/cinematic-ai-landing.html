@@ -3,552 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agnes AI | Multimodal Intelligence</title>
+    <title>Solstice Motion | Editorial AI Studio</title>
     <style>
         :root {
-            --bg-color: #050505;
-            --copper-base: #b87333;
-            --copper-light: #e5a966;
-            --copper-dark: #8a5321;
-            --text-main: #f0f0f0;
-            --text-muted: #888888;
-            --glass-bg: rgba(20, 15, 10, 0.6);
-            --glass-border: rgba(184, 115, 51, 0.2);
+            --bg: #FDFBF7;
+            --bg-alt: #F7F5F0;
+            --text: #1A1A1A;
+            --accent: #D48C00;
+            --accent-hover: #B57500;
+            --gray: #666666;
+            --border: #E5E0D5;
+            --font-display: 'Georgia', 'Times New Roman', serif;
+            --font-body: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            overflow-x: hidden;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
             line-height: 1.6;
+            overflow-x: hidden;
         }
-
         /* Typography */
-        h1, h2, h3 {
-            font-weight: 300;
-            letter-spacing: -0.02em;
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, var(--copper-light), var(--copper-base), #5c3a16);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Canvas Background */
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.6;
-        }
+        h1, h2, h3 { font-family: var(--font-display); font-weight: normal; letter-spacing: -0.02em; }
+        h1 { font-size: clamp(3.5rem, 8vw, 6.5rem); line-height: 1.1; margin-bottom: 1.5rem; }
+        h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+        p { color: var(--gray); margin-bottom: 1.5rem; max-width: 60ch; }
 
         /* Layout */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Navigation */
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 2rem 0; margin-bottom: 4rem;
         }
+        .logo { font-family: var(--font-display); font-size: 1.5rem; font-weight: bold; color: var(--text); text-decoration: none; }
+        .nav-links a { margin-left: 2rem; color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--copper-light);
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            margin-left: 2rem;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--copper-light);
-        }
-
-        /* Hero Section */
+        /* Hero */
         .hero {
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            display: grid; grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem; align-items: center; padding-bottom: 8rem;
         }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to bottom, #ffffff, #a0a0a0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .hero-content { animation: fadeUp 1s ease-out; }
+        .hero-visual {
+            height: 60vh; background: linear-gradient(135deg, var(--bg-alt) 0%, #EBE6D9 100%);
+            position: relative; overflow: hidden; border-radius: 4px;
         }
-
-        .hero h1 span {
-            display: block;
-            font-size: clamp(1.5rem, 4vw, 3rem);
-            color: var(--copper-light);
-            -webkit-text-fill-color: var(--copper-light);
-            margin-bottom: 0.5rem;
-            font-weight: 400;
+        .hero-visual::before {
+            content: ''; position: absolute; top: -20%; right: -20%; width: 60%; height: 140%;
+            background: radial-gradient(circle, rgba(212, 140, 0, 0.1) 0%, transparent 70%);
+            animation: pulse 6s infinite ease-in-out;
         }
-
-        .hero p {
-            max-width: 600px;
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-        }
-
-        /* Buttons */
         .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: transparent;
-            border: 1px solid var(--copper-base);
-            color: var(--copper-light);
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-size: 0.8rem;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+            display: inline-block; background: var(--text); color: #fff;
+            padding: 1rem 2.5rem; text-decoration: none; font-size: 0.9rem;
+            text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s ease;
         }
+        .btn:hover { background: var(--accent); color: var(--text); }
 
-        .btn:hover {
-            background: var(--copper-base);
-            color: #000;
-            box-shadow: 0 0 20px rgba(184, 115, 51, 0.4);
+        /* Capabilities */
+        .capabilities { background: var(--bg-alt); padding: 8rem 0; }
+        .cap-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem; margin-top: 4rem;
         }
-
-        .btn-primary {
-            background: linear-gradient(45deg, var(--copper-dark), var(--copper-base));
-            color: #fff;
-            border: none;
-        }
-        
-        .btn-primary:hover {
-            background: linear-gradient(45deg, var(--copper-base), var(--copper-light));
-            color: #000;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            padding: 4rem 0;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .stat-item h3 {
-            font-size: 2.5rem;
-            color: var(--copper-light);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-item p {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        /* API Cards */
-        .api-section {
-            padding: 8rem 0;
-        }
-
-        .section-header {
-            margin-bottom: 4rem;
-            text-align: center;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 2.5rem;
-            border-radius: 4px;
+        .cap-card {
+            background: var(--bg); padding: 3rem 2rem; border: 1px solid var(--border);
             transition: transform 0.3s ease, border-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--copper-base), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
+        .cap-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .cap-card h4 {
+            font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 1rem; color: var(--accent);
         }
+        .cap-icon { font-size: 2rem; margin-bottom: 1.5rem; display: block; color: var(--text); }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--copper-base);
+        /* Metrics */
+        .metrics { padding: 6rem 0; text-align: center; }
+        .metrics-grid {
+            display: flex; justify-content: space-around; flex-wrap: wrap; gap: 2rem; margin-top: 3rem;
         }
+        .metric-item { flex: 1; min-width: 200px; }
+        .metric-val { font-family: var(--font-display); font-size: 4rem; color: var(--text); line-height: 1; }
+        .metric-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-top: 1rem; display: block; }
 
-        .card:hover::before {
-            transform: translateX(100%);
-        }
-
-        .card-icon {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--copper-light);
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #fff;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-        }
-
-        .card-link {
-            color: var(--copper-base);
-            text-decoration: none;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card-link:hover {
-            color: var(--copper-light);
-        }
-
-        /* CTA Section */
+        /* CTA */
         .cta-section {
-            padding: 8rem 0;
-            text-align: center;
-            background: radial-gradient(circle at center, rgba(184, 115, 51, 0.1) 0%, transparent 70%);
+            background: var(--text); color: var(--bg); padding: 8rem 0; text-align: center;
         }
-
-        .cta-section h2 {
-            font-size: 3rem;
-            margin-bottom: 2rem;
+        .cta-section h2 { color: var(--bg); }
+        .cta-section p { color: #999; margin: 0 auto 3rem auto; }
+        .cta-btn {
+            background: var(--accent); color: #fff; padding: 1.2rem 3rem; text-decoration: none;
+            font-size: 1rem; text-transform: uppercase; letter-spacing: 0.15em; display: inline-block;
+            transition: background 0.3s ease; border: none; cursor: pointer;
         }
+        .cta-btn:hover { background: #fff; color: var(--text); }
 
         /* Footer */
-        footer {
-            padding: 2rem 0;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
+        footer { padding: 2rem 0; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--gray); }
 
-        /* Responsive */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.8; } }
+
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            .hero h1 span {
-                font-size: 1.5rem;
-            }
-            .nav-links {
-                display: none;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+            .hero { grid-template-columns: 1fr; padding-bottom: 4rem; }
+            h1 { font-size: 3rem; }
+            .hero-visual { height: 40vh; }
+            nav { flex-direction: column; gap: 1rem; }
+            .nav-links a { margin: 0 0.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <div id="canvas-container">
-        <canvas id="meshCanvas"></canvas>
-    </div>
+<div class="container">
+    <nav>
+        <a href="#" class="logo">Solstice Motion</a>
+        <div class="nav-links">
+            <a href="#capabilities">Studio</a>
+            <a href="#metrics">Impact</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+</div>
 
+<section class="hero container">
+    <div class="hero-content">
+        <h1>The Editor's New<br>Consciousness</h1>
+        <p>Solstice Motion is the premier multimodal AI studio for editorial excellence. Generate high-fidelity text, conceptual imagery, and cinematic video in a unified creative workflow.</p>
+        <a href="#start" class="btn">Begin Studio Access</a>
+    </div>
+    <div class="hero-visual">
+        <!-- Minimalist CSS abstract shape -->
+        <div style="position:absolute; bottom: 10%; left: 10%; width: 40%; height: 2px; background: var(--accent);"></div>
+        <div style="position:absolute; top: 20%; right: 15%; width: 100px; height: 150px; border: 1px solid var(--text);"></div>
+    </div>
+</section>
+
+<section id="capabilities" class="capabilities">
     <div class="container">
-        <nav>
-            <div class="logo">AGNES<span style="color:#fff">.AI</span></div>
-            <div class="nav-links">
-                <a href="#">Research</a>
-                <a href="#">Models</a>
-                <a href="#">Enterprise</a>
-                <a href="#">Login</a>
+        <h2>Creative Capabilities</h2>
+        <p>A unified suite of generative tools designed for high-end publication and narrative production.</p>
+        <div class="cap-grid">
+            <div class="cap-card">
+                <h4>Generative Text</h4>
+                <span class="cap-icon">Aa</span>
+                <p>Context-aware editorial copy, long-form narrative structuring, and semantic style transfer for consistent voice.</p>
             </div>
-        </nav>
-
-        <section class="hero">
-            <h1>
-                <span>THE NEXT GEN</span>
-                MULTIMODAL INTELLIGENCE
-            </h1>
-            <p>Unify text, vision, and audio into a single neural architecture. Experience the future of generative AI with zero latency and infinite context.</p>
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-                <a href="#" class="btn btn-primary">Get API Access</a>
-                <a href="#" class="btn">View Documentation</a>
+            <div class="cap-card">
+                <h4>Visual Synthesis</h4>
+                <span class="cap-icon">◻</span>
+                <p>Photorealistic image generation and abstract concept visualization tailored for cover art and editorial illustration.</p>
             </div>
-        </section>
-
-        <section class="stats-section">
-            <div class="container">
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <h3>98.5%</h3>
-                        <p>Benchmark Accuracy</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>128k</h3>
-                        <p>Context Window</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>&lt;20ms</h3>
-                        <p>Inference Latency</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>4x</h3>
-                        <p>Token Efficiency</p>
-                    </div>
-                </div>
+            <div class="cap-card">
+                <h4>Cinematic Video</h4>
+                <span class="cap-icon">▶</span>
+                <p>High-fidelity video synthesis from text prompts. Create motion graphics and dynamic sequences with precise control.</p>
             </div>
-        </section>
-
-        <section class="api-section">
-            <div class="section-header">
-                <h2 class="gradient-text">MODULAR CAPABILITIES</h2>
-                <p style="color: var(--text-muted);">Seamlessly integrate distinct modalities into a unified pipeline.</p>
-            </div>
-            
-            <div class="cards-grid">
-                <!-- Text Card -->
-                <div class="card">
-                    <div class="card-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M4 7V4h16v3M9 20h6M12 4v16"/>
-                        </svg>
-                    </div>
-                    <h3>Natural Language</h3>
-                    <p>State-of-the-art LLM capabilities for reasoning, coding, and complex instruction following with extended context retention.</p>
-                    <a href="#" class="card-link">Explore Text API &rarr;</a>
-                </div>
-
-                <!-- Image Card -->
-                <div class="card">
-                    <div class="card-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                            <circle cx="8.5" cy="8.5" r="1.5"/>
-                            <polyline points="21 15 16 10 5 21"/>
-                        </svg>
-                    </div>
-                    <h3>Computer Vision</h3>
-                    <p>Generate photorealistic imagery and analyze visual data with pixel-perfect precision and semantic understanding.</p>
-                    <a href="#" class="card-link">Explore Vision API &rarr;</a>
-                </div>
-
-                <!-- Video Card -->
-                <div class="card">
-                    <div class="card-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <polygon points="23 7 16 12 23 17 23 7"/>
-                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-                        </svg>
-                    </div>
-                    <h3>Temporal Synthesis</h3>
-                    <p>Create coherent video sequences from text prompts. Consistent character modeling and physics-aware motion generation.</p>
-                    <a href="#" class="card-link">Explore Video API &rarr;</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="cta-section">
-            <h2 class="gradient-text">READY TO BUILD?</h2>
-            <p style="color: var(--text-muted); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">Join thousands of developers building the next generation of intelligent applications.</p>
-            <a href="#" class="btn btn-primary">Start Building Now</a>
-        </section>
-
-        <footer>
-            <p>Generated as a single-file Agnes AI landing page demo.</p>
-        </footer>
+        </div>
     </div>
+</section>
 
-    <script>
-        const canvas = document.getElementById('meshCanvas');
-        const ctx = canvas.getContext('2d');
+<section id="metrics" class="metrics">
+    <div class="container">
+        <h2>Performance Metrics</h2>
+        <div class="metrics-grid">
+            <div class="metric-item">
+                <div class="metric-val" id="stat1">98%</div>
+                <span class="metric-label">Semantic Accuracy</span>
+            </div>
+            <div class="metric-item">
+                <div class="metric-val" id="stat2">12k</div>
+                <span class="metric-label">Generations / Day</span>
+            </div>
+            <div class="metric-item">
+                <div class="metric-val" id="stat3">4k</div>
+                <span class="metric-label">Output Resolution</span>
+            </div>
+        </div>
+    </div>
+</section>
 
-        let width, height;
-        let particles = [];
-        let connections = [];
+<section class="cta-section">
+    <div class="container">
+        <h2>Join the Editorial Revolution</h2>
+        <p>Transform your workflow with the world's most advanced multimodal AI platform.</p>
+        <a href="#login" class="cta-btn">Request Early Access</a>
+    </div>
+</section>
 
-        // Configuration
-        const particleCount = 60;
-        const connectionDistance = 150;
-        const mouseDistance = 200;
-        
-        // Colors
-        const colorCopper = '184, 115, 51'; // RGB for #b87333
-        const colorDark = '40, 20, 10'; // RGB for dark copper/brown
+<footer>
+    <div class="container">
+        <p>&copy; 2024 Solstice Motion. All rights reserved. Designed by Sapiens AI.</p>
+    </div>
+</footer>
 
-        // Mouse tracking
-        let mouse = { x: -1000, y: -1000 };
+<script>
+    const animateValue = (id, start, end, suffix, duration) => {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const val = Math.floor(progress * (end - start) + start);
+            document.getElementById(id).innerHTML = val + suffix;
+            if (progress < 1) window.requestAnimationFrame(step);
+        };
+        window.requestAnimationFrame(step);
+    };
 
-        function resize() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-            initParticles();
-        }
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
-                this.color = Math.random() > 0.8 ? colorCopper : colorDark;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateValue("stat1", 0, 98, "%", 2000);
+                animateValue("stat2", 0, 12, "k+", 2000);
+                animateValue("stat3", 0, 4, "k", 2000);
+                observer.disconnect();
             }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // Bounce off edges
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-
-                // Mouse interaction
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < mouseDistance) {
-                    const forceDirectionX = dx / distance;
-                    const forceDirectionY = dy / distance;
-                    const force = (mouseDistance - distance) / mouseDistance;
-                    const directionX = forceDirectionX * force * 0.5;
-                    const directionY = forceDirectionY * force * 0.5;
-                    
-                    this.vx += directionX;
-                    this.vy += directionY;
-                }
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${this.color}, 0.5)`;
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function drawConnections() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    let dx = particles[i].x - particles[j].x;
-                    let dy = particles[i].y - particles[j].y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < connectionDistance) {
-                        ctx.beginPath();
-                        // Opacity based on distance
-                        let opacity = 1 - (distance / connectionDistance);
-                        ctx.strokeStyle = `rgba(${colorCopper}, ${opacity * 0.2})`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            
-            drawConnections();
-            requestAnimationFrame(animate);
-        }
-
-        // Event Listeners
-        window.addEventListener('resize', resize);
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
         });
-        
-        window.addEventListener('mouseout', () => {
-            mouse.x = -1000;
-            mouse.y = -1000;
-        });
+    });
+    observer.observe(document.getElementById("metrics"));
+</script>
 
-        // Initialize
-        resize();
-        animate();
-    </script>
 </body>
 </html>
