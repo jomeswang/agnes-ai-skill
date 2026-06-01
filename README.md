@@ -14,6 +14,8 @@
 > as time-sensitive platform messaging and verify current commercial terms in
 > the live product when cost matters.
 
+![Agnes AI cyberpunk showcase](./assets/images/cyberpunk-bridge.jpg)
+
 This repository packages a single root `SKILL.md` so coding agents can quickly:
 
 - get and persist an Agnes API key
@@ -24,6 +26,61 @@ This repository packages a single root `SKILL.md` so coding agents can quickly:
 
 The skill stays intentionally lightweight. It teaches agents how to make Agnes
 API calls successfully without copying the full docs into the repository.
+
+## Showcase
+
+All preview assets below were generated on June 1, 2026 with Agnes APIs and
+prompts adapted from the supplied public writeups plus the showcase structure
+used by repositories like `awesome-gpt-image-2`,
+`awesome-seedance-2-prompts`, and `awesome-gemini-3-prompts`.
+
+### Featured Images
+
+`agnes-image-2.1-flash`
+
+| Cyberpunk bridge scene | Luxury product ad |
+| --- | --- |
+| ![Cyberpunk bridge](./assets/images/cyberpunk-bridge.jpg) | ![Perfume product ad](./assets/images/perfume-product.jpg) |
+
+| Mobile infographic |
+| --- |
+| ![Chocolate latte infographic](./assets/images/latte-infographic.jpg) |
+
+Example prompt themes used for the gallery:
+
+- rain-soaked cyberpunk Tokyo bridge with anime lighting and cinematic depth
+- premium commercial perfume hero shot with crystal pedestal and water splash
+- mobile-friendly tutorial infographic with strong layout hierarchy
+
+### Featured Video
+
+`agnes-video-v2.0`
+
+GitHub does not autoplay repository videos in markdown, so the preview below
+links directly to the generated `.mp4`.
+
+[![FPV forest waterfall video preview](./assets/video-previews/forest-waterfall.jpg)](./assets/videos/forest-waterfall.mp4)
+
+Prompt theme used for this clip:
+
+- FPV drone shot gliding through dense sunlit pine forest and revealing a
+  hidden waterfall with cinematic motion
+
+### Featured App Demos
+
+`agnes-2.0-flash`
+
+These two single-file HTML demos were generated from Agnes text prompts and are
+included in [`examples/apps`](./examples/apps).
+
+| Cinematic AI landing page | Mobile map UI prototype |
+| --- | --- |
+| [![Cinematic landing page](./assets/apps/cinematic-ai-landing.jpg)](./examples/apps/cinematic-ai-landing.html) | [![Beijing map UI](./assets/apps/beijing-map-ui.jpg)](./examples/apps/beijing-map-ui.html) |
+
+Open the source files directly:
+
+- [Cinematic landing page HTML](./examples/apps/cinematic-ai-landing.html)
+- [Beijing map UI HTML](./examples/apps/beijing-map-ui.html)
 
 ## Why Agnes
 
