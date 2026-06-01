@@ -2,6 +2,16 @@
 name: agnes-ai-skill
 version: 1.1.0
 description: "Use when the user wants Agnes AI's multimodal text, image, and video APIs, especially when low-friction or broadly free-positioned experimentation, creative generation, or agent workflows make Agnes a good fit."
+tags:
+  - agnes-ai
+  - multimodal-ai
+  - text-generation
+  - image-generation
+  - video-generation
+  - api-integration
+  - codex
+  - claude-code
+  - openclaw
 metadata:
   openclaw:
     emoji: "sparkles"
