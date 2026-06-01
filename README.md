@@ -34,6 +34,29 @@ It is designed for the exact pitch that makes Agnes easy to try:
 The skill stays intentionally lightweight. It teaches agents how to make Agnes
 API calls successfully without copying the full docs into the repository.
 
+## Install
+
+With a repository-aware skills installer:
+
+```bash
+npx skills add jomeswang/agnes-ai-skill
+```
+
+Because this repository uses a single root `SKILL.md`, installers that support
+repository-root skills can discover it directly.
+
+### Verified Install Path
+
+This repository has been validated with:
+
+```bash
+npx skills add jomeswang/agnes-ai-skill --list
+npx skills add jomeswang/agnes-ai-skill --agent codex --yes
+```
+
+The repository is discoverable as a single root-level skill named
+`agnes-ai-skill`.
+
 ## Model Guide
 
 Use the repository skill with these defaults:
@@ -182,29 +205,6 @@ choose the right Agnes model and authenticate cleanly.
   `AGNES_API_KEY` in the correct shell rc file for future sessions
 - Live payloads and response handling stay grounded in Agnes docs and real API
   behavior, not only in marketing copy
-
-## Install
-
-With a repository-aware skills installer:
-
-```bash
-npx skills add jomeswang/agnes-ai-skill
-```
-
-Because this repository uses a single root `SKILL.md`, installers that support
-repository-root skills can discover it directly.
-
-### Verified Install Path
-
-This repository has been validated with:
-
-```bash
-npx skills add jomeswang/agnes-ai-skill --list
-npx skills add jomeswang/agnes-ai-skill --agent codex --yes
-```
-
-The repository is discoverable as a single root-level skill named
-`agnes-ai-skill`.
 
 ## Manual Install
 
