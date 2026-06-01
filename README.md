@@ -7,7 +7,7 @@
 
 > One install target for Agnes AI text, image, and video APIs.
 
-> 文本、图片、视频全模态 API，一套 skill 直接接入 Agnes。
+> One skill for Agnes AI's full multimodal stack: text, image, and video APIs.
 >
 > Based on the supplied June 2026 materials, Agnes publicly positioned its core
 > multimodal APIs as broadly free to try and attractive for high-frequency
@@ -188,7 +188,7 @@ choose the right Agnes model and authenticate cleanly.
   pricing sections.
 - Some public writeups still frame Agnes as broadly free or indefinitely free.
 - The Video 2.0 docs are also operationally time-sensitive: the same page can
-  mix concrete price figures with “pricing to be announced” style notes.
+  mix concrete price figures with "pricing to be announced" style notes.
 - Treat all pricing, free-tier, and billing claims as live-doc verified only.
 
 ## Safety Model
