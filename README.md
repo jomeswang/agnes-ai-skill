@@ -31,7 +31,7 @@ duplicating the full developer docs.
 With a repository-aware skills installer:
 
 ```bash
-npx skills add <owner>/agnes-ai-skill
+npx skills add jomeswang/agnes-ai-skill
 ```
 
 Because this repository uses a single root `SKILL.md`, installers that support
