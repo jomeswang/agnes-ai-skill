@@ -108,12 +108,6 @@ cases were regenerated as brighter, more public-facing product experiences.
 
 `agnes-video-v2.0`
 
-Most GitHub README galleries either rely on GitHub-hosted attachment players or
-use poster images that click through to the video file. This repository uses
-the second pattern because it is more stable across repository pages. The three
-previews below are exact `t=0` first frames extracted locally from the generated
-`.mp4` files with `scripts/extract_first_frames.swift`.
-
 | Preview | Case | Model | Prompt recipe |
 | --- | --- | --- | --- |
 | [![Perfume ad film first frame](./assets/video-previews/ad-film-10s.jpg)](./assets/videos/ad-film-10s.mp4) | Perfume ad film | `agnes-video-v2.0` | Ten-second luxury commercial with macro bottle details, orbiting reflections, atomizer tension beat, champagne-gold glow, and a final hero reveal built for premium beauty launch pages. |
