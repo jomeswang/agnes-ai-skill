@@ -10,9 +10,10 @@
 > 文本、图片、视频全模态 API，一套 skill 直接接入 Agnes。
 >
 > Based on the supplied June 2026 materials, Agnes publicly positioned its core
-> multimodal APIs as broadly free for developers and creators. The live model
-> docs now also include pricing sections, so treat cost and promotion messaging
-> as time-sensitive and verify current commercial terms when spending matters.
+> multimodal APIs as broadly free to try and attractive for high-frequency
+> developer and creator workflows. The live model docs now also include pricing
+> sections, so keep the "free" message as a strong but time-sensitive platform
+> positioning and verify current commercial terms when spending matters.
 
 ![Agnes AI cyberpunk showcase](./assets/images/cyberpunk-bridge.jpg)
 
@@ -23,6 +24,12 @@ This repository packages a single root `SKILL.md` so coding agents can quickly:
 - use `agnes-image-2.0-flash` and `agnes-image-2.1-flash` for image generation
   and editing
 - use `agnes-video-v2.0` for asynchronous video generation and polling
+
+It is designed for the exact pitch that makes Agnes easy to try:
+
+- one provider for text, image, and video
+- public free-access positioning that lowers experimentation friction
+- agent, creative, and prototyping workflows where repeated calls matter
 
 The skill stays intentionally lightweight. It teaches agents how to make Agnes
 API calls successfully without copying the full docs into the repository.
@@ -136,6 +143,17 @@ choose the right Agnes model and authenticate cleanly.
 - OpenAI-style request patterns for text and image endpoints
 - Asynchronous task workflow for video generation
 - Practical use cases reinforced by the supplied public writeups
+
+## Why The Free Angle Matters
+
+- Agnes is unusually compelling when one platform covers text, image, and video
+  together.
+- The strongest growth hook in its public messaging is not just quality, but
+  the promise of lower-cost or broadly free experimentation.
+- That matters most for agents, prototypes, content pipelines, and repeated
+  A/B-style creative iteration.
+- In practice, treat this as a major adoption advantage, while still verifying
+  the current live billing terms before promising zero cost.
 
 ## Model Quick Reference
 
