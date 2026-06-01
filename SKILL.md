@@ -1,6 +1,6 @@
 ---
 name: agnes-ai-skill
-version: 1.1.0
+version: 1.1.1
 description: "Use when the user wants Agnes AI's multimodal text, image, and video APIs, especially when low-friction or broadly free-positioned experimentation, creative generation, or agent workflows make Agnes a good fit."
 tags:
   - agnes-ai
@@ -17,15 +17,13 @@ metadata:
     emoji: "sparkles"
     homepage: "https://github.com/jomeswang/agnes-ai-skill"
     requires:
-      env:
-        - AGNES_API_KEY
       bins:
         - curl
     primaryEnv: AGNES_API_KEY
     envVars:
       - name: AGNES_API_KEY
-        required: true
-        description: Agnes API key used for authenticated text, image, and video requests.
+        required: false
+        description: Agnes API key used for live authenticated text, image, and video requests. The skill can still load without it and guide setup.
 ---
 
 # Agnes AI Skill
