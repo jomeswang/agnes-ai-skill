@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beijing Map Prototype</title>
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --water-color: #aadaff;
+            --park-color: #d3e8d3;
+            --road-major: #ffffff;
+            --road-minor: #f7f7f7;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666;
+            --accent: #0066ff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #e0e5ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Smartphone Frame */
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            background: #fff;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2), 0 0 0 12px #111;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Map Layer */
+        .map-container {
+            flex: 1;
+            position: relative;
+            background-color: #f3f4f6;
+            overflow: hidden;
+            /* CSS Pattern for Map Grid */
+            background-image: 
+                linear-gradient(#e5e7eb 1px, transparent 1px),
+                linear-gradient(90deg, #e5e7eb 1px, transparent 1px),
+                linear-gradient(#d1d5db 2px, transparent 2px),
+                linear-gradient(90deg, #d1d5db 2px, transparent 2px);
+            background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
+        }
+
+        /* Abstract Map Elements */
+        .map-element {
+            position: absolute;
+            background-color: var(--park-color);
+            border-radius: 4px;
+            opacity: 0.8;
+        }
+
+        .water {
+            background-color: var(--water-color);
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            filter: blur(1px);
+        }
+
+        /* Specific Locations (Abstract) */
+        .location-tiananmen {
+            top: 45%; left: 40%; width: 120px; height: 80px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.05);
+        }
+        
+        .location-park {
+            top: 30%; left: 20%; width: 100px; height: 100px;
+            background-color: #c8e6c9;
+            border-radius: 50%;
+        }
+
+        .location-river {
+            top: 60%; left: -10%; width: 500px; height: 40px;
+            background-color: #b3d9ff;
+            transform: rotate(-15deg);
+            border-radius: 20px;
+        }
+
+        /* Route Line SVG */
+        .route-svg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .route-path {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawRoute 3s ease-out forwards;
+            filter: drop-shadow(0 2px 4px rgba(0,102,255,0.4));
+        }
+
+        @keyframes drawRoute {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* UI Overlay Layer */
+        .ui-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .pointer-events-auto {
+            pointer-events: auto;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            padding: 50px 20px 15px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0));
+        }
+
+        .search-container {
+            background: #fff;
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+        }
+        
+        .search-container:active {
+            transform: scale(0.98);
+        }
+
+        .search-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            fill: #999;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .search-input::placeholder {
+            color: #ccc;
+        }
+
+        /* Floating Controls */
+        .floating-controls {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .control-btn {
+            width: 44px;
+            height: 44px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .control-btn:active {
+            background: #f0f0f0;
+        }
+
+        .control-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #333;
+        }
+
+        /* Route Card */
+        .route-card {
+            background: #fff;
+            margin: 0 20px 30px;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            transform: translateY(100%);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .route-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .route-time {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .route-meta {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .route-tags {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tag {
+            background: #f0f2f5;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .route-details {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .start-btn {
+            margin-top: 15px;
+            width: 100%;
+            background: var(--text-primary);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* User Location Pulse */
+        .location-pin {
+            position: absolute;
+            top: 45%;
+            left: 40%;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border: 3px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,102,255,0.4);
+            z-index: 5;
+            transform: translate(-50%, -50%);
+        }
+
+        .pulse-ring {
+            position: absolute;
+            top: 45%;
+            left: 40%;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 2s infinite;
+            z-index: 4;
+        }
+
+        @keyframes pulse {
+            0% { width: 20px; height: 20px; opacity: 1; }
+            100% { width: 80px; height: 80px; opacity: 0; }
+        }
+
+        /* SVG Icons */
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="phone-frame">
+        <!-- Map Background Layer -->
+        <div class="map-container">
+            <!-- Abstract Map Elements -->
+            <div class="map-element location-park"></div>
+            <div class="map-element water" style="top: 60%; left: 60%; width: 150px; height: 100px;"></div>
+            <div class="map-element location-river"></div>
+            <div class="map-element location-tiananmen"></div>
+            
+            <!-- Route SVG -->
+            <svg class="route-svg" viewBox="0 0 375 812" preserveAspectRatio="none">
+                <path class="route-path" d="M 150 365 Q 200 450 180 550 T 180 700" />
+            </svg>
+
+            <!-- User Location -->
+            <div class="pulse-ring"></div>
+            <div class="location-pin"></div>
+        </div>
+
+        <!-- UI Overlay Layer -->
+        <div class="ui-layer">
+            
+            <!-- Top Search Bar -->
+            <div class="top-bar pointer-events-auto">
+                <div class="search-container">
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search Beijing..." value="Forbidden City">
+                </div>
+            </div>
+
+            <!-- Floating Controls -->
+            <div class="floating-controls pointer-events-auto">
+                <div class="control-btn">
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                </div>
+                <div class="control-btn">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                </div>
+                <div class="control-btn">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                </div>
+            </div>
+
+            <!-- Bottom Route Card -->
+            <div class="route-card pointer-events-auto">
+                <div class="route-header">
+                    <div>
+                        <div class="route-time">14 min</div>
+                        <div class="route-meta">Via Chang'an Ave</div>
+                    </div>
+                    <div class="route-tags">
+                        <span class="tag">Fastest</span>
+                    </div>
+                </div>
+                
+                <div class="route-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Distance</span>
+                        <span class="detail-value">5.2 km</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Departure</span>
+                        <span class="detail-value">Now</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Arrival</span>
+                        <span class="detail-value">10:14 AM</span>
+                    </div>
+                </div>
+
+                <button class="start-btn">Start Navigation</button>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
