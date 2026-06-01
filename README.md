@@ -90,8 +90,9 @@ lead with a preview, keep the prompt compact enough to scan, and organize
 examples by outcome instead of by raw API parameter lists. This gallery follows
 that pattern with 9 compact cases regenerated with Agnes on June 1, 2026. The
 image prompts were tightened toward the shorter, more editorial style seen in
-`awesome-gpt-image-2`, while the lead video prompt uses a more shot-structured
-format inspired by the cinematic entries in `awesome-seedance`.
+`awesome-gpt-image-2`, the video prompts were rebuilt around ad-film,
+animation, and cinematic beats inspired by `awesome-seedance`, and the HTML
+cases were regenerated as brighter, more public-facing product experiences.
 
 ### Image Cases
 
@@ -111,9 +112,9 @@ The preview thumbnails below link to the generated `.mp4` files.
 
 | Preview | Case | Model | Prompt recipe |
 | --- | --- | --- | --- |
-| [![Luxury perfume 10 second film](./assets/video-previews/luxury-perfume-10s.jpg)](./assets/videos/luxury-perfume-10s.mp4) | Luxury perfume 10-second film | `agnes-video-v2.0` | Four-beat product commercial: macro bottle, slow orbit splash, atomizer push-in, full hero reveal, champagne-gold light, realistic premium materials. |
-| [![FPV forest waterfall](./assets/video-previews/forest-waterfall.jpg)](./assets/videos/forest-waterfall.mp4) | FPV waterfall reveal | `agnes-video-v2.0` | Glide through dense pine forest and break into a hidden waterfall clearing, natural speed ramp feel, tactile air, cinematic outdoor travel energy. |
-| [![Rural cooking motion](./assets/video-previews/rural-cooking.png)](./assets/videos/rural-cooking.mp4) | Slow living food moment | `agnes-video-v2.0` | Sunlit kitchen counter by a window, hands lift a ripe tomato from fresh herbs, shallow depth of field, tactile domestic realism, calm editorial motion. |
+| [![Perfume ad film](./assets/video-previews/ad-film-10s.jpg)](./assets/videos/ad-film-10s.mp4) | Perfume ad film | `agnes-video-v2.0` | Ten-second luxury commercial with macro bottle details, orbiting reflections, atomizer tension beat, champagne-gold glow, and a final hero reveal built for premium beauty launch pages. |
+| [![Mechanical otter animation short](./assets/video-previews/animation-film-10s.jpg)](./assets/videos/animation-film-10s.mp4) | Mechanical otter animation short | `agnes-video-v2.0` | Ten-second animated short: fearless otter pilot bursts through a clockwork engine room, expressive face, hand-painted adventure energy, cinematic action timing, family-film clarity. |
+| [![Desert cinematic film scene](./assets/video-previews/cinema-film-10s.jpg)](./assets/videos/cinema-film-10s.mp4) | Desert cinematic film scene | `agnes-video-v2.0` | Ten-second widescreen film moment: lone traveler crosses a dust-heavy desert test site, sculptural machine in the background, restrained grading, prestige sci-fi drama mood. |
 
 ### App Cases
 
@@ -124,9 +125,9 @@ Single-file HTML demos generated from Agnes text prompts and saved in
 
 | Preview | Case | Model | Prompt recipe |
 | --- | --- | --- | --- |
-| [![Solstice Motion landing page](./assets/apps/cinematic-ai-landing.jpg)](./examples/apps/cinematic-ai-landing.html) | Solstice Motion studio page | `agnes-2.0-flash` | Fresh one-file editorial AI studio homepage, cream palette, serif display type, asymmetrical hero, bright premium product marketing. |
-| [![Daybreak Beijing app](./assets/apps/beijing-map-ui.jpg)](./examples/apps/beijing-map-ui.html) | Daybreak Beijing city guide | `agnes-2.0-flash` | Fresh mobile travel prototype, warm paper UI, map module, itinerary cards, premium city-guide navigation, bright tactile interactions. |
-| [![Aureline watch site](./assets/apps/watch-experience.jpg)](./examples/apps/watch-experience.html) | Aureline watch microsite | `agnes-2.0-flash` | Fresh luxury watch microsite, ivory-and-champagne palette, museum spacing, serif storytelling, bright high-end commerce presentation. |
+| [![Agnes AI official-style homepage](./assets/apps/cinematic-ai-landing.jpg)](./examples/apps/cinematic-ai-landing.html) | Agnes AI official-style homepage | `agnes-2.0-flash` | Fresh one-file official product homepage for Agnes AI, bright premium palette, strong platform nav, enterprise hero copy, high-clarity call-to-action hierarchy. |
+| [![Lantern Sprint mini-game](./assets/apps/beijing-map-ui.jpg)](./examples/apps/beijing-map-ui.html) | Lantern Sprint mini-game | `agnes-2.0-flash` | Fresh browser mini-game with bright festival palette, instant start state, arcade score loop, keyboard and touch controls, polished one-file mobile-friendly presentation. |
+| [![Golden Hour Stories promo page](./assets/apps/watch-experience.jpg)](./examples/apps/watch-experience.html) | Golden Hour Stories promo page | `agnes-2.0-flash` | Fresh campaign landing page for Agnes image and video outputs, soft daylight tones, editorial serif hero, luxury launch framing, clear promotional storytelling. |
 
 ## Why Agnes
 

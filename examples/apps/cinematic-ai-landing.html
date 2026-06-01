@@ -3,227 +3,453 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solstice Motion | Editorial AI Studio</title>
+    <title>Agnes AI | Intelligent Architecture</title>
     <style>
         :root {
-            --bg: #FDFBF7;
-            --bg-alt: #F7F5F0;
-            --text: #1A1A1A;
-            --accent: #D48C00;
-            --accent-hover: #B57500;
-            --gray: #666666;
-            --border: #E5E0D5;
-            --font-display: 'Georgia', 'Times New Roman', serif;
-            --font-body: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            --pearl: #F9F9F7;
+            --sand: #F4F2ED;
+            --ink: #121212;
+            --gray: #555555;
+            --light-gray: #E5E5E5;
+            --amber: #D96C2A;
+            --amber-hover: #C0581D;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-serif: Georgia, "Times New Roman", serif;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: var(--font-body);
+            font-family: var(--font-main);
+            background-color: var(--pearl);
+            color: var(--ink);
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-        /* Typography */
-        h1, h2, h3 { font-family: var(--font-display); font-weight: normal; letter-spacing: -0.02em; }
-        h1 { font-size: clamp(3.5rem, 8vw, 6.5rem); line-height: 1.1; margin-bottom: 1.5rem; }
-        h2 { font-size: 2.5rem; margin-bottom: 1rem; }
-        h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
-        p { color: var(--gray); margin-bottom: 1.5rem; max-width: 60ch; }
+        a { text-decoration: none; color: inherit; transition: opacity 0.2s; }
+        a:hover { opacity: 0.6; }
 
-        /* Layout */
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
-        nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 2rem 0; margin-bottom: 4rem;
+        /* Layout Utilities */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
-        .logo { font-family: var(--font-display); font-size: 1.5rem; font-weight: bold; color: var(--text); text-decoration: none; }
-        .nav-links a { margin-left: 2rem; color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+        /* Typography */
+        h1, h2, h3 { font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
+        h1 { font-size: 3.5rem; margin-bottom: 1.5rem; }
+        h2 { font-size: 2rem; margin-bottom: 1rem; }
+        h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        p { margin-bottom: 1.5rem; color: var(--gray); font-size: 1.05rem; }
+        .serif { font-family: var(--font-serif); font-style: italic; color: var(--amber); }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            border: 1px solid var(--ink);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: var(--ink);
+            color: var(--pearl);
+        }
+        .btn-primary:hover {
+            background-color: var(--amber);
+            border-color: var(--amber);
+            opacity: 1;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--ink);
+        }
+        .btn-secondary:hover {
+            background-color: var(--ink);
+            color: var(--pearl);
+            opacity: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            background: rgba(249, 249, 247, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.05em; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { font-size: 0.9rem; font-weight: 500; }
 
         /* Hero */
         .hero {
-            display: grid; grid-template-columns: 1.2fr 0.8fr;
-            gap: 4rem; align-items: center; padding-bottom: 8rem;
+            padding: 8rem 0 6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 80vh;
         }
-        .hero-content { animation: fadeUp 1s ease-out; }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
         .hero-visual {
-            height: 60vh; background: linear-gradient(135deg, var(--bg-alt) 0%, #EBE6D9 100%);
-            position: relative; overflow: hidden; border-radius: 4px;
+            background: var(--sand);
+            height: 400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 4px solid var(--amber);
+            position: relative;
         }
-        .hero-visual::before {
-            content: ''; position: absolute; top: -20%; right: -20%; width: 60%; height: 140%;
-            background: radial-gradient(circle, rgba(212, 140, 0, 0.1) 0%, transparent 70%);
-            animation: pulse 6s infinite ease-in-out;
+        .hero-visual::after {
+            content: "System Ready";
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--gray);
         }
-        .btn {
-            display: inline-block; background: var(--text); color: #fff;
-            padding: 1rem 2.5rem; text-decoration: none; font-size: 0.9rem;
-            text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s ease;
-        }
-        .btn:hover { background: var(--accent); color: var(--text); }
 
-        /* Capabilities */
-        .capabilities { background: var(--bg-alt); padding: 8rem 0; }
-        .cap-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem; margin-top: 4rem;
+        /* Sections */
+        section { padding: 6rem 0; }
+        .section-header {
+            border-top: 1px solid var(--light-gray);
+            padding-top: 2rem;
+            margin-bottom: 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
         }
-        .cap-card {
-            background: var(--bg); padding: 3rem 2rem; border: 1px solid var(--border);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+        .section-tag {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: var(--amber);
+            margin-bottom: 1rem;
+            display: block;
         }
-        .cap-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .cap-card h4 {
-            font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 1rem; color: var(--accent);
-        }
-        .cap-icon { font-size: 2rem; margin-bottom: 1.5rem; display: block; color: var(--text); }
 
-        /* Metrics */
-        .metrics { padding: 6rem 0; text-align: center; }
-        .metrics-grid {
-            display: flex; justify-content: space-around; flex-wrap: wrap; gap: 2rem; margin-top: 3rem;
+        /* Cards */
+        .card {
+            background: white;
+            padding: 2rem;
+            border: 1px solid var(--light-gray);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        .metric-item { flex: 1; min-width: 200px; }
-        .metric-val { font-family: var(--font-display); font-size: 4rem; color: var(--text); line-height: 1; }
-        .metric-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-top: 1rem; display: block; }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-color: var(--amber);
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 0.2rem;
+        }
 
-        /* CTA */
-        .cta-section {
-            background: var(--text); color: var(--bg); padding: 8rem 0; text-align: center;
+        /* Developer / API */
+        .dev-section {
+            background: var(--ink);
+            color: var(--pearl);
+            padding: 6rem 0;
         }
-        .cta-section h2 { color: var(--bg); }
-        .cta-section p { color: #999; margin: 0 auto 3rem auto; }
-        .cta-btn {
-            background: var(--accent); color: #fff; padding: 1.2rem 3rem; text-decoration: none;
-            font-size: 1rem; text-transform: uppercase; letter-spacing: 0.15em; display: inline-block;
-            transition: background 0.3s ease; border: none; cursor: pointer;
+        .dev-section p { color: #A0A0A0; }
+        .code-block {
+            background: #1A1A1A;
+            padding: 1.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #D96C2A;
+            margin: 2rem 0;
+            border-left: 1px solid #333;
         }
-        .cta-btn:hover { background: #fff; color: var(--text); }
+
+        /* Trust */
+        .trust-bar {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--light-gray);
+            border-bottom: 1px solid var(--light-gray);
+            margin-top: 4rem;
+            opacity: 0.6;
+        }
+        .trust-item { font-weight: 600; font-size: 1.2rem; color: var(--gray); }
 
         /* Footer */
-        footer { padding: 2rem 0; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--gray); }
+        footer {
+            background: white;
+            padding: 4rem 0;
+            margin-top: 4rem;
+        }
+        .footer-grid {
+            display: flex;
+            justify-content: space-between;
+        }
+        .footer-col h4 { font-size: 0.9rem; margin-bottom: 1.2rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.8rem; }
+        .footer-col a { font-size: 0.9rem; color: var(--gray); }
+        .footer-col a:hover { color: var(--ink); opacity: 1; }
 
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.8; } }
-
+        /* Mobile */
         @media (max-width: 768px) {
-            .hero { grid-template-columns: 1fr; padding-bottom: 4rem; }
-            h1 { font-size: 3rem; }
-            .hero-visual { height: 40vh; }
-            nav { flex-direction: column; gap: 1rem; }
-            .nav-links a { margin: 0 0.5rem; }
+            h1 { font-size: 2.5rem; }
+            .grid-2, .grid-3, .hero-grid, .footer-grid { grid-template-columns: 1fr; display: flex; flex-direction: column; }
+            .nav-links { display: none; }
+            .hero-visual { height: 250px; margin-top: 2rem; }
+            .section-header { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <nav>
-        <a href="#" class="logo">Solstice Motion</a>
-        <div class="nav-links">
-            <a href="#capabilities">Studio</a>
-            <a href="#metrics">Impact</a>
-            <a href="#contact">Contact</a>
+    <!-- Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">AGNES AI</a>
+                <div class="nav-links">
+                    <a href="#platform">Platform</a>
+                    <a href="#research">Research</a>
+                    <a href="#enterprise">Enterprise</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#" class="btn btn-primary" style="padding: 0.5rem 1.2rem; font-size: 0.8rem;">Launch Console</a>
+                </div>
+            </nav>
         </div>
-    </nav>
-</div>
+    </header>
 
-<section class="hero container">
-    <div class="hero-content">
-        <h1>The Editor's New<br>Consciousness</h1>
-        <p>Solstice Motion is the premier multimodal AI studio for editorial excellence. Generate high-fidelity text, conceptual imagery, and cinematic video in a unified creative workflow.</p>
-        <a href="#start" class="btn">Begin Studio Access</a>
-    </div>
-    <div class="hero-visual">
-        <!-- Minimalist CSS abstract shape -->
-        <div style="position:absolute; bottom: 10%; left: 10%; width: 40%; height: 2px; background: var(--accent);"></div>
-        <div style="position:absolute; top: 20%; right: 15%; width: 100px; height: 150px; border: 1px solid var(--text);"></div>
-    </div>
-</section>
-
-<section id="capabilities" class="capabilities">
-    <div class="container">
-        <h2>Creative Capabilities</h2>
-        <p>A unified suite of generative tools designed for high-end publication and narrative production.</p>
-        <div class="cap-grid">
-            <div class="cap-card">
-                <h4>Generative Text</h4>
-                <span class="cap-icon">Aa</span>
-                <p>Context-aware editorial copy, long-form narrative structuring, and semantic style transfer for consistent voice.</p>
+    <!-- Hero Section -->
+    <section class="container hero">
+        <div class="hero-grid">
+            <div>
+                <span class="section-tag">Next Generation Infrastructure</span>
+                <h1>Architectural <br><span class="serif">intelligence.</span></h1>
+                <p>Agnes AI delivers semantic precision for the world's most demanding developers. We bridge the gap between raw computation and refined logic.</p>
+                <div style="margin-top: 2rem;">
+                    <a href="#api" class="btn btn-primary">Get API Keys</a>
+                    <a href="#docs" class="btn btn-secondary" style="margin-left: 1rem;">Read Documentation</a>
+                </div>
             </div>
-            <div class="cap-card">
-                <h4>Visual Synthesis</h4>
-                <span class="cap-icon">◻</span>
-                <p>Photorealistic image generation and abstract concept visualization tailored for cover art and editorial illustration.</p>
-            </div>
-            <div class="cap-card">
-                <h4>Cinematic Video</h4>
-                <span class="cap-icon">▶</span>
-                <p>High-fidelity video synthesis from text prompts. Create motion graphics and dynamic sequences with precise control.</p>
+            <div class="hero-visual">
+                <div style="text-align: left; width: 80%;">
+                    <div style="height: 4px; width: 40px; background: var(--amber); margin-bottom: 20px;"></div>
+                    <div style="height: 8px; width: 100%; background: #EAE9E4; margin-bottom: 10px;"></div>
+                    <div style="height: 8px; width: 85%; background: #EAE9E4; margin-bottom: 10px;"></div>
+                    <div style="height: 8px; width: 92%; background: #EAE9E4; margin-bottom: 20px;"></div>
+                    <div style="font-family: monospace; font-size: 0.8rem; color: var(--amber); margin-top: 30px;">
+                        &gt; optimizing neural weights...<br>
+                        &gt; latency: 12ms<br>
+                        &gt; context window: 128k
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="metrics" class="metrics">
-    <div class="container">
-        <h2>Performance Metrics</h2>
-        <div class="metrics-grid">
-            <div class="metric-item">
-                <div class="metric-val" id="stat1">98%</div>
-                <span class="metric-label">Semantic Accuracy</span>
+    <!-- Model Overview -->
+    <section class="container">
+        <div class="section-header">
+            <div>
+                <span class="section-tag">Model Zoo</span>
+                <h2>Tailored for scale.</h2>
             </div>
-            <div class="metric-item">
-                <div class="metric-val" id="stat2">12k</div>
-                <span class="metric-label">Generations / Day</span>
+            <a href="#" style="border-bottom: 1px solid var(--ink); font-size: 0.9rem;">View full specifications</a>
+        </div>
+        <div class="grid grid-3">
+            <div class="card">
+                <h3>Agnes-7B</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 1rem;">Optimized for edge deployment. Maximum efficiency on mobile and IoT hardware without sacrificing semantic reasoning.</p>
+                <a href="#" style="font-size: 0.85rem; font-weight: 600; color: var(--ink);">Optimize Model &rarr;</a>
             </div>
-            <div class="metric-item">
-                <div class="metric-val" id="stat3">4k</div>
-                <span class="metric-label">Output Resolution</span>
+            <div class="card" style="border-color: var(--ink);">
+                <div style="font-size: 0.7rem; background: var(--ink); color: white; display: inline-block; padding: 2px 6px; margin-bottom: 1rem;">RECOMMENDED</div>
+                <h3>Agnes-14B</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 1rem;">The sweet spot for general enterprise tasks. Handles complex multi-turn context with unprecedented accuracy.</p>
+                <a href="#" style="font-size: 0.85rem; font-weight: 600; color: var(--amber);">Deploy v4.2 &rarr;</a>
+            </div>
+            <div class="card">
+                <h3>Agnes-70B</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 1rem;">Flagship reasoning engine. Designed for RAG systems, code generation, and heavy data analysis pipelines.</p>
+                <a href="#" style="font-size: 0.85rem; font-weight: 600; color: var(--ink);">Request Access &rarr;</a>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="cta-section">
-    <div class="container">
-        <h2>Join the Editorial Revolution</h2>
-        <p>Transform your workflow with the world's most advanced multimodal AI platform.</p>
-        <a href="#login" class="cta-btn">Request Early Access</a>
-    </div>
-</section>
+    <!-- Feature Story: Developer Experience -->
+    <section id="api" class="dev-section">
+        <div class="container">
+            <div class="grid grid-2" style="align-items: center;">
+                <div>
+                    <span class="section-tag">Integration</span>
+                    <h2 style="color: white;">Designed for the <span style="color: var(--amber);">developer</span> workflow.</h2>
+                    <p>Agnes AI isn't just a model; it's a structural component of your stack. Our API is standardized, typed, and incredibly fast.</p>
+                    <ul style="margin-bottom: 2rem; list-style: none; color: #A0A0A0;">
+                        <li style="margin-bottom: 0.5rem;">&bull; 99.99% SLA Uptime</li>
+                        <li style="margin-bottom: 0.5rem;">&bull; JSON-mode strict parsing</li>
+                        <li style="margin-bottom: 0.5rem;">&bull; Streaming tokens for real-time UI</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary" style="border-color: #555; color: white;">View API Reference</a>
+                </div>
+                <div>
+                    <div class="code-block">
+const agnes = require('agnes-sdk');<br><br>
+const response = await agnes.chat.complete({<br>
+&nbsp;&nbsp;model: 'agnes-14b-v4',<br>
+&nbsp;&nbsp;messages: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ role: 'user', content: 'Analyze this dataset.' }<br>
+&nbsp;&nbsp;],<br>
+&nbsp;&nbsp;temperature: 0.2,<br>
+&nbsp;&nbsp;response_format: { type: 'json_object' }<br>
+});<br><br>
+console.log(response.choices[0].message);
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<footer>
-    <div class="container">
-        <p>&copy; 2024 Solstice Motion. All rights reserved. Designed by Sapiens AI.</p>
-    </div>
-</footer>
+    <!-- Trust & Features -->
+    <section class="container">
+        <div class="section-header">
+            <div>
+                <span class="section-tag">Enterprise Grade</span>
+                <h2>Reliability by design.</h2>
+            </div>
+        </div>
+        <div class="grid grid-3">
+            <div style="padding: 1rem 0;">
+                <div class="stat-number">128k</div>
+                <h3>Context Window</h3>
+                <p style="font-size: 0.9rem;">Process entire codebases or legal documents in a single pass.</p>
+            </div>
+            <div style="padding: 1rem 0; border-left: 1px solid var(--light-gray);">
+                <div class="stat-number">4x</div>
+                <h3>Inference Speed</h3>
+                <p style="font-size: 0.9rem;">Proprietary pruning algorithms ensure faster time-to-first-token.</p>
+            </div>
+            <div style="padding: 1rem 0; border-left: 1px solid var(--light-gray);">
+                <div class="stat-number">SOC2</div>
+                <h3>Compliant</h3>
+                <p style="font-size: 0.9rem;">Type B certification for data privacy and secure handling.</p>
+            </div>
+        </div>
 
-<script>
-    const animateValue = (id, start, end, suffix, duration) => {
-        let startTimestamp = null;
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            const val = Math.floor(progress * (end - start) + start);
-            document.getElementById(id).innerHTML = val + suffix;
-            if (progress < 1) window.requestAnimationFrame(step);
-        };
-        window.requestAnimationFrame(step);
-    };
+        <div class="trust-bar">
+            <span class="trust-item">NVIDIA PARTNER</span>
+            <span class="trust-item">STACK OVERFLOW SPONSOR</span>
+            <span class="trust-item">GITHUB EXCEL</span>
+            <span class="trust-item">Vercel</span>
+        </div>
+    </section>
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateValue("stat1", 0, 98, "%", 2000);
-                animateValue("stat2", 0, 12, "k+", 2000);
-                animateValue("stat3", 0, 4, "k", 2000);
-                observer.disconnect();
-            }
+    <!-- Final CTA -->
+    <section style="background: var(--sand); text-align: center;">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to build?</h2>
+            <p style="max-width: 600px; margin: 0 auto 2rem auto;">Join thousands of engineers who have migrated to Agnes AI for better accuracy and lower latency.</p>
+            <a href="#" class="btn btn-primary" style="padding: 1rem 3rem;">Start Building Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="container">
+        <div class="footer-grid">
+            <div class="footer-col" style="max-width: 300px;">
+                <div class="logo" style="margin-bottom: 1rem;">AGNES AI</div>
+                <p style="font-size: 0.85rem;">San Francisco, CA.<br>Optimizing the future of intelligence.</p>
+            </div>
+            <div class="footer-col">
+                <h4>PRODUCT</h4>
+                <ul>
+                    <li><a href="#">Model Zoo</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Security</a></li>
+                    <li><a href="#">Enterprise</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>DEVELOPERS</h4>
+                <ul>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">API Reference</a></li>
+                    <li><a href="#">GitHub Repo</a></li>
+                    <li><a href="#">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>COMPANY</h4>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--light-gray); display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--gray);">
+            <span>&copy; 2024 Agnes AI Inc. All rights reserved.</span>
+            <div>
+                <a href="#" style="margin-left: 1rem;">Privacy Policy</a>
+                <a href="#" style="margin-left: 1rem;">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple script to handle smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
-    });
-    observer.observe(document.getElementById("metrics"));
-</script>
 
+        // Minimal scroll observer for fade-in effect (Performance conscious)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Add subtle load animation to cards
+        document.querySelectorAll('.card').forEach((card, index) => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html>
