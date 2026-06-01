@@ -108,15 +108,17 @@ cases were regenerated as brighter, more public-facing product experiences.
 
 `agnes-video-v2.0`
 
-This section uses raw HTML video embeds against the public Agnes output URLs so
-we can test whether GitHub README rendering supports inline playback for these
-remote `.mp4` assets.
+Most GitHub README galleries either rely on GitHub-hosted attachment players or
+use poster images that click through to the video file. This repository uses
+the second pattern because it is more stable across repository pages. The three
+previews below are exact `t=0` first frames extracted locally from the generated
+`.mp4` files with `scripts/extract_first_frames.swift`.
 
-| Video | Case | Model | Prompt recipe |
+| Preview | Case | Model | Prompt recipe |
 | --- | --- | --- | --- |
-| <video src="https://storage.googleapis.com/agnes-aigc/aigc/videos/2026/06/01/video_e2174265aecde32098be8939193d8ef04f0b119038c4e88c.mp4" controls muted playsinline width="320"></video> | Perfume ad film | `agnes-video-v2.0` | Ten-second luxury commercial with macro bottle details, orbiting reflections, atomizer tension beat, champagne-gold glow, and a final hero reveal built for premium beauty launch pages. |
-| <video src="https://storage.googleapis.com/agnes-aigc/aigc/videos/2026/06/01/video_2389c248266c3e1a70e829100860cbd3d7a25702b4fa4168.mp4" controls muted playsinline width="320"></video> | Mechanical otter animation short | `agnes-video-v2.0` | Ten-second animated short: fearless otter pilot bursts through a clockwork engine room, expressive face, hand-painted adventure energy, cinematic action timing, family-film clarity. |
-| <video src="https://storage.googleapis.com/agnes-aigc/aigc/videos/2026/06/01/video_c046fdbae6acbb046c3087fda274561748669cb3cef96220.mp4" controls muted playsinline width="320"></video> | Desert cinematic film scene | `agnes-video-v2.0` | Ten-second widescreen film moment: lone traveler crosses a dust-heavy desert test site, sculptural machine in the background, restrained grading, prestige sci-fi drama mood. |
+| [![Perfume ad film first frame](./assets/video-previews/ad-film-10s.jpg)](./assets/videos/ad-film-10s.mp4) | Perfume ad film | `agnes-video-v2.0` | Ten-second luxury commercial with macro bottle details, orbiting reflections, atomizer tension beat, champagne-gold glow, and a final hero reveal built for premium beauty launch pages. |
+| [![Mechanical otter animation short first frame](./assets/video-previews/animation-film-10s.jpg)](./assets/videos/animation-film-10s.mp4) | Mechanical otter animation short | `agnes-video-v2.0` | Ten-second animated short: fearless otter pilot bursts through a clockwork engine room, expressive face, hand-painted adventure energy, cinematic action timing, family-film clarity. |
+| [![Desert cinematic film scene first frame](./assets/video-previews/cinema-film-10s.jpg)](./assets/videos/cinema-film-10s.mp4) | Desert cinematic film scene | `agnes-video-v2.0` | Ten-second widescreen film moment: lone traveler crosses a dust-heavy desert test site, sculptural machine in the background, restrained grading, prestige sci-fi drama mood. |
 
 ### App Cases
 
