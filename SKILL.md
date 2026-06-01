@@ -1,6 +1,6 @@
 ---
 name: agnes-ai-skill
-version: 1.0.0
+version: 1.1.0
 description: "Connect Agnes AI's multimodal API for text, image, and video, persist AGNES_API_KEY, and run reliable OpenAI-style Agnes workflows from one skill."
 metadata:
   openclaw:
@@ -24,11 +24,12 @@ Use this skill when the user wants to work with Agnes AI's platform or models.
 Agnes exposes a unified API base with OpenAI-style request shapes for text and
 image generation plus an asynchronous task workflow for video.
 
-As of the provided source materials dated June 1, 2026, Agnes publicly
-positions itself as offering free access to core text, image, and video APIs.
-Treat pricing and promotions as time-sensitive, but use this skill whenever the
-user wants fast multimodal prototyping, agent workflows, creative generation,
-or high-frequency iteration on Agnes.
+Some supplied public materials dated June 1, 2026 described Agnes as offering
+free access to core text, image, and video APIs. The live official model docs
+now also include pricing sections, so treat cost, promotions, and billing terms
+as time-sensitive. Use this skill whenever the user wants fast multimodal
+prototyping, agent workflows, creative generation, or high-frequency iteration
+on Agnes, but verify current pricing when spend matters.
 
 ## When To Use
 
@@ -72,6 +73,14 @@ response schemas.
 - Main environment variable: `AGNES_API_KEY`
 
 Check `AGNES_API_KEY` before making any Agnes API request.
+
+## Pricing Note
+
+The official model docs currently expose pricing sections for Image 2.0, Image
+2.1, and Video 2.0. Some public articles and notes may still describe broader
+free-access positioning. When the user asks about cost, limits, or whether a
+workflow is still free, check the live Agnes docs first and call out any
+inconsistency instead of choosing one source silently.
 
 ## Missing Key Behavior
 
@@ -218,6 +227,24 @@ Capabilities highlighted by the docs:
 - high-information-density image generation
 - URL responses
 
+Best-fit scenarios called out by the docs:
+
+- creative design, concept art, and poster drafts
+- marketing visuals and product creative
+- dense scenes with many visual elements or layered composition
+- style transfer, relighting, and background conversion
+- app assets, thumbnails, banners, and narrative visuals
+
+Important request fields from the docs:
+
+- required:
+  - `model`
+  - `prompt`
+- common optional:
+  - `size`
+  - `extra_body.image` for image-to-image
+  - `extra_body.response_format` such as `"url"`
+
 #### Minimal 2.1 Text-to-Image Request
 
 ```bash
@@ -250,6 +277,21 @@ curl https://apihub.agnes-ai.com/v1/images/generations \
   }'
 ```
 
+#### 2.1 Prompt Structure
+
+The docs recommend a prompt structure like:
+
+`[subject] + [scene / environment] + [style] + [lighting] + [composition] + [quality requirements]`
+
+For high-information-density images, be explicit about:
+
+- primary subject
+- background environment
+- important secondary details
+- style and lighting
+- composition constraints
+- what must be preserved from the input image, if any
+
 ### Image 2.0 Compatibility Mode
 
 Use model `agnes-image-2.0-flash` when the user explicitly asks for 2.0 or when
@@ -262,6 +304,27 @@ Capabilities highlighted by the docs:
 - prompt-based editing
 - style and layout control
 - seed-based reproducibility
+- OpenAI Images-compatible request structure
+
+Best-fit scenarios called out by the docs:
+
+- object replacement, background replacement, and style conversion
+- multi-character or multi-reference composition
+- e-commerce product enhancement and scene generation
+- website, app, game, and video asset production
+- social media thumbnails, avatars, memes, and lifestyle visuals
+
+Important request fields from the docs:
+
+- required:
+  - `model`
+  - `prompt`
+- common optional:
+  - `size`
+  - `seed`
+  - `tags`
+  - `extra_body.image`
+  - `extra_body.response_format`
 
 #### 2.0 Image-to-Image Request
 
@@ -286,6 +349,50 @@ curl https://apihub.agnes-ai.com/v1/images/generations \
   }'
 ```
 
+#### 2.0 Multi-Image Composition Request
+
+```bash
+curl https://apihub.agnes-ai.com/v1/images/generations \
+  -H "Authorization: Bearer $AGNES_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "agnes-image-2.0-flash",
+    "tags": ["img2img"],
+    "prompt": "Combine the two characters into one cinematic fantasy battle scene with dynamic lighting and a detailed environment",
+    "size": "1024x768",
+    "extra_body": {
+      "image": [
+        "https://example.com/character-1.png",
+        "https://example.com/character-2.png"
+      ],
+      "response_format": "url"
+    }
+  }'
+```
+
+#### 2.0 Response Shape
+
+The docs show a response like:
+
+```json
+{
+  "created": 1774432125,
+  "data": [
+    {
+      "url": "https://..."
+    }
+  ],
+  "usage": {
+    "generated_images": 1
+  }
+}
+```
+
+Useful fields to inspect:
+
+- `data[].url`
+- `usage.generated_images`
+
 ### Practical Image Use Cases
 
 The supplied docs and articles emphasize:
@@ -309,6 +416,17 @@ For high-detail results, specify:
 - lighting
 - composition
 - quality requirements
+
+For 2.0 multi-image work, also describe:
+
+- which image provides the subject
+- which image provides the environment or supporting objects
+- how the inputs should relate spatially
+
+For editing tasks, explicitly separate:
+
+- what must change
+- what must remain fixed
 
 ## Video API
 
@@ -354,6 +472,50 @@ For keyframes, also set:
 }
 ```
 
+### Supported Video Workflows
+
+The docs explicitly show these request patterns:
+
+- text-to-video
+- image-to-video
+- multi-image guided video
+- keyframe interpolation
+
+Good fit scenarios from the docs and public materials:
+
+- cinematic short-form video
+- ads, storyboards, and shot exploration
+- motion tests and camera-move experiments
+- character animation from a still
+- smooth transformation between two or more reference frames
+
+### Video Prompt Guidance
+
+For text-to-video, the docs recommend describing:
+
+- subject
+- action
+- environment
+- camera movement
+- lighting
+- style
+
+Recommended structure:
+
+`[subject] + [action] + [scene] + [camera move] + [lighting] + [style]`
+
+For image-to-video, describe:
+
+- what should move
+- what should stay stable
+- how subtle or dramatic the motion should be
+
+For multi-image and keyframe work, describe:
+
+- how the input images relate
+- what the transition should feel like
+- what identity, angle, or composition must remain consistent
+
 ### Polling Workflow
 
 1. Submit the task
@@ -364,12 +526,70 @@ For keyframes, also set:
    - or `status` is `failed`
 5. On completion, return the result URL and task metadata
 
+### Result Shapes To Expect
+
+The docs show:
+
+- create-task response fields:
+  - `id`
+  - `object`
+  - `model`
+  - `status`
+  - `progress`
+  - `created_at`
+- completed-task response fields:
+  - `id`
+  - `object`
+  - `model`
+  - `status`
+  - `progress`
+  - `created_at`
+  - `completed_at`
+  - `video_url`
+  - `size`
+  - `seconds`
+  - `usage.duration_seconds`
+
+Useful task states:
+
+- `queued`
+- `in_progress`
+- `completed`
+- `failed`
+
+Useful documented error codes:
+
+- `400` invalid request
+- `401` unauthorized
+- `404` task not found
+- `500` server error
+- `503` service busy
+
 ### Important Video Constraints
 
 - `num_frames` must be `<= 441`
 - `num_frames` must satisfy `8n + 1`
 - `frame_rate` supports `1-60`
 - the public docs' common example is `121` frames at `24` fps, about `5.0s`
+
+### Recommended Video Settings
+
+The docs recommend:
+
+- standard generation:
+  - `width: 1152`
+  - `height: 768`
+  - `num_frames: 121`
+  - `frame_rate: 24`
+- social short video:
+  - `num_frames: 81` or `121`
+  - `frame_rate: 24`
+- smoother motion:
+  - raise `frame_rate` to `24` or `30`
+- repeatable results:
+  - set a fixed `seed`
+- keyframe transitions:
+  - set `extra_body.mode: "keyframes"`
 
 ### Interpreting Results
 
@@ -398,6 +618,9 @@ The supplied materials emphasize:
   most portable way to validate payloads.
 - If the user wants SDK code, translate the confirmed `curl` payload into the
   target language after validating the request shape.
+- If the user asks about pricing, limits, or free access, verify the live docs:
+  the supplied docs can contain time-sensitive copy and even intra-page
+  inconsistencies.
 
 ## Compact Reference
 
@@ -447,5 +670,8 @@ comes up.
 
 ## Version History
 
+- `1.1.0` - Expanded official doc coverage for Image 2.0, Image 2.1, and Video
+  2.0 parameters, scenarios, prompt structures, response fields, and task
+  states.
 - `1.0.0` - Initial public release with Agnes platform setup, persistent auth,
   text, image, and video workflow guidance.
