@@ -85,58 +85,45 @@ The official docs also give each model fairly different best practices:
 
 ## Showcase
 
-All preview assets below were generated on June 1, 2026 with Agnes APIs and
-prompts adapted from the supplied public writeups plus the showcase structure
-used by repositories like `awesome-gpt-image-2`,
-`awesome-seedance-2-prompts`, and `awesome-gemini-3-prompts`.
+The strongest outside prompt libraries all do the same three things well:
+lead with a preview, keep the prompt compact enough to scan, and organize
+examples by outcome instead of by raw API parameter lists. This gallery follows
+that pattern with 9 compact cases generated with Agnes on June 1, 2026.
 
-### Featured Images
+### Image Cases
 
 `agnes-image-2.1-flash`
 
-| Cyberpunk bridge scene | Luxury product ad |
-| --- | --- |
-| ![Cyberpunk bridge](./assets/images/cyberpunk-bridge.jpg) | ![Perfume product ad](./assets/images/perfume-product.jpg) |
+| Preview | Case | Model | Prompt recipe |
+| --- | --- | --- | --- |
+| [![Cyberpunk bridge](./assets/images/cyberpunk-bridge.jpg)](./assets/images/cyberpunk-bridge.jpg) | Neon bridge editorial | `agnes-image-2.1-flash` | Rain-soaked Tokyo skybridge, cyan-magenta neon, umbrella silhouettes, reflective pavement, cinematic anime realism, centered leading lines. |
+| [![Perfume product ad](./assets/images/perfume-product.jpg)](./assets/images/perfume-product.jpg) | Luxury perfume hero | `agnes-image-2.1-flash` | Perfume bottle on a crystal pedestal, frozen water crown, champagne highlights, premium beauty campaign lighting, macro product photography. |
+| [![Chocolate latte infographic](./assets/images/latte-infographic.jpg)](./assets/images/latte-infographic.jpg) | Mobile infographic card | `agnes-image-2.1-flash` | Step-by-step chocolate latte infographic, editorial grid, tactile ingredients, crisp type-safe layout zones, warm cafe palette, mobile-first readability. |
 
-| Mobile infographic |
-| --- |
-| ![Chocolate latte infographic](./assets/images/latte-infographic.jpg) |
-
-Example prompt themes used for the gallery:
-
-- rain-soaked cyberpunk Tokyo bridge with anime lighting and cinematic depth
-- premium commercial perfume hero shot with crystal pedestal and water splash
-- mobile-friendly tutorial infographic with strong layout hierarchy
-
-### Featured Video
+### Video Cases
 
 `agnes-video-v2.0`
 
-GitHub does not autoplay repository videos in markdown, so the preview below
-links directly to the generated `.mp4`.
+The preview thumbnails below link to the generated `.mp4` files.
 
-[![FPV forest waterfall video preview](./assets/video-previews/forest-waterfall.jpg)](./assets/videos/forest-waterfall.mp4)
+| Preview | Case | Model | Prompt recipe |
+| --- | --- | --- | --- |
+| [![Cyberpunk bridge motion](./assets/video-previews/bridge-pushin-clean.png)](./assets/videos/bridge-pushin.mp4) | Neon bridge push-in | `agnes-video-v2.0` | Slow dolly-in through a rainy elevated walkway in neon Tokyo, umbrellas crossing frame, misty atmosphere, glossy reflections, cinematic ad pacing. |
+| [![Perfume motion](./assets/video-previews/perfume-motion.png)](./assets/videos/perfume-motion.mp4) | Luxury product motion | `agnes-video-v2.0` | Macro fragrance film with a crystal plinth, suspended splash, glitter particles, warm gold bokeh, premium commercial reveal with controlled parallax. |
+| [![Rural cooking motion](./assets/video-previews/rural-cooking.png)](./assets/videos/rural-cooking.mp4) | Slow living food moment | `agnes-video-v2.0` | Sunlit kitchen counter by a window, hands lift a ripe tomato from fresh herbs, shallow depth of field, tactile domestic realism, calm editorial motion. |
 
-Prompt theme used for this clip:
-
-- FPV drone shot gliding through dense sunlit pine forest and revealing a
-  hidden waterfall with cinematic motion
-
-### Featured App Demos
+### App Cases
 
 `agnes-2.0-flash`
 
-These two single-file HTML demos were generated from Agnes text prompts and are
-included in [`examples/apps`](./examples/apps).
+Single-file HTML demos generated from Agnes text prompts and saved in
+[`examples/apps`](./examples/apps).
 
-| Cinematic AI landing page | Mobile map UI prototype |
-| --- | --- |
-| [![Cinematic landing page](./assets/apps/cinematic-ai-landing.jpg)](./examples/apps/cinematic-ai-landing.html) | [![Beijing map UI](./assets/apps/beijing-map-ui.jpg)](./examples/apps/beijing-map-ui.html) |
-
-Open the source files directly:
-
-- [Cinematic landing page HTML](./examples/apps/cinematic-ai-landing.html)
-- [Beijing map UI HTML](./examples/apps/beijing-map-ui.html)
+| Preview | Case | Model | Prompt recipe |
+| --- | --- | --- | --- |
+| [![Cinematic landing page](./assets/apps/cinematic-ai-landing.jpg)](./examples/apps/cinematic-ai-landing.html) | Cinematic AI launch page | `agnes-2.0-flash` | One-file launch page for an AI film tool, oversized editorial typography, dramatic gradients, crisp CTA hierarchy, premium SaaS trailer energy. |
+| [![Beijing map UI](./assets/apps/beijing-map-ui.jpg)](./examples/apps/beijing-map-ui.html) | City guide mobile UI | `agnes-2.0-flash` | Map-first Beijing guide prototype, glass cards, transit-aware bottom sheet, tactile iconography, polished travel-product interactions. |
+| [![Luxury watch landing page](./assets/apps/watch-experience.jpg)](./examples/apps/watch-experience.html) | Luxury watch microsite | `agnes-2.0-flash` | Black-and-gold watch storytelling page, serif headlines, museum spacing, restrained motion cues, high-end commerce presentation in one HTML file. |
 
 ## Why Agnes
 
