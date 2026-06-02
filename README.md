@@ -15,7 +15,7 @@
 > sections, so keep the "free" message as a strong but time-sensitive platform
 > positioning and verify current commercial terms when spending matters.
 
-![Agnes AI cyberpunk showcase](./assets/images/cyberpunk-bridge.jpg)
+![Agnes AI frontier models hero](./assets/images/agnes-frontier-models-banner.jpg)
 
 This repository packages a single root `SKILL.md` so coding agents can quickly:
 
