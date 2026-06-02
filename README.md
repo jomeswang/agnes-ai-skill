@@ -61,7 +61,7 @@ The published companion execution layer is:
 - npm: [`agnes-ai-cli`](https://www.npmjs.com/package/agnes-ai-cli)
 - GitHub: [`jomeswang/agnes-ai-cli`](https://github.com/jomeswang/agnes-ai-cli)
 
-Install it when you want stable commands instead of hand-written `curl`:
+Install it when you want stable commands instead of hand-written requests:
 
 ```bash
 npm install -g agnes-ai-cli
@@ -104,14 +104,17 @@ Supported CLI range for this skill release:
 
 Recommended order:
 
-1. use a local `agnes` binary only when `agnes --version` falls inside
+1. first use `npx -y agnes-ai-cli@^0.1.0 --help` in fresh or unknown
+   environments
+2. use a local `agnes` binary only when `agnes --version` falls inside
    `>=0.1.0 <0.2.0`
-2. otherwise use `npx -y agnes-ai-cli@^0.1.0 ...`
-3. keep raw `curl` as the portability fallback
+3. otherwise use `npx -y agnes-ai-cli@^0.1.0 ...`
+4. treat the CLI as the execution path and keep the skill focused on model
+   choice, auth, and command selection
 
-This repository continues to keep `curl` examples because they are the most
-portable way to validate Agnes payloads, but the long-term execution model is
-skill guidance plus a separate CLI package.
+This repository is now aligned around a CLI-first execution model: the skill
+decides which Agnes command to run, and the companion CLI performs the live
+text, image, and video requests.
 
 ## Model Guide
 
