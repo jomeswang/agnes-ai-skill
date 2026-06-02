@@ -684,7 +684,7 @@ The supplied materials emphasize:
 With repository-aware skill installers:
 
 ```bash
-npx skills add jomeswang/agnes-ai-skill
+npx skills add jomeswang/agnes-ai-skill -g
 ```
 
 After installation, invoke this skill whenever Agnes setup or Agnes model usage
