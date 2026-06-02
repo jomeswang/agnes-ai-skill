@@ -56,21 +56,16 @@ that can version and ship independently.
 
 ## Companion CLI
 
-The companion execution layer lives here today:
+The published companion execution layer is:
 
+- npm: [`agnes-ai-cli`](https://www.npmjs.com/package/agnes-ai-cli)
 - GitHub: [`jomeswang/agnes-ai-cli`](https://github.com/jomeswang/agnes-ai-cli)
 
-Current verified install path:
+Install it when you want stable commands instead of hand-written `curl`:
 
 ```bash
-npm install -g github:jomeswang/agnes-ai-cli
+npm install -g agnes-ai-cli
 agnes --help
-```
-
-Planned npm package name:
-
-```bash
-agnes-ai-cli
 ```
 
 ## Install
@@ -111,8 +106,7 @@ Recommended order:
 
 1. use a local `agnes` binary only when `agnes --version` falls inside
    `>=0.1.0 <0.2.0`
-2. otherwise install or update the companion CLI from
-   `github:jomeswang/agnes-ai-cli`, then retry with local `agnes`
+2. otherwise use `npx -y agnes-ai-cli@^0.1.0 ...`
 3. keep raw `curl` as the portability fallback
 
 This repository continues to keep `curl` examples because they are the most
