@@ -1,6 +1,6 @@
 ---
 name: agnes-ai-skill
-version: 1.1.1
+version: 1.1.2
 description: "Use when the user wants Agnes AI's multimodal text, image, and video APIs, especially when low-friction or broadly free-positioned experimentation, creative generation, or agent workflows make Agnes a good fit."
 tags:
   - agnes-ai
@@ -621,13 +621,23 @@ The supplied materials emphasize:
 
 ## Operational Guidance
 
+- Supported companion CLI range for this skill release:
+  - `>=0.1.0 <0.2.0`
 - Prefer live API tests over guessing when the user asks whether a model path or
   parameter actually works.
 - For image results, expect a URL in the response.
 - For video results, be prepared to poll instead of waiting for a synchronous
   response.
-- If the user wants code examples, default to `curl` first because it is the
-  most portable way to validate payloads.
+- Prefer the separate Agnes CLI execution layer when it is already installed
+  and known to be compatible.
+- If a local `agnes` command is available, use it only when
+  `agnes --version` falls inside `>=0.1.0 <0.2.0`.
+- If that version check does not pass, prefer
+  `npx -y agnes-ai-cli@^0.1.0 ...` before writing raw request code by hand.
+- If the CLI is not available, keep `curl` as the portability fallback for
+  validating payloads.
+- If the user wants code examples, default to `curl` examples when you need the
+  most transparent request baseline.
 - If the user wants SDK code, translate the confirmed `curl` payload into the
   target language after validating the request shape.
 - If the user asks about pricing, limits, or free access, verify the live docs:
@@ -682,6 +692,8 @@ comes up.
 
 ## Version History
 
+- `1.1.2` - Added dual-track CLI guidance so agents prefer the separate Agnes
+  execution layer when available and keep raw `curl` as the fallback.
 - `1.1.0` - Expanded official doc coverage for Image 2.0, Image 2.1, and Video
   2.0 parameters, scenarios, prompt structures, response fields, and task
   states.

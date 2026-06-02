@@ -34,6 +34,26 @@ It is designed for the exact pitch that makes Agnes easy to try:
 The skill stays intentionally lightweight. It teaches agents how to make Agnes
 API calls successfully without copying the full docs into the repository.
 
+## Dual-Track Layout
+
+This repository stays focused on the installable root skill. The companion
+execution layer is designed as a separate CLI package so skill installs do not
+pull a full command runtime into `~/.codex/skills` or project-local skill
+directories.
+
+The intended split is:
+
+- `agnes-ai-skill`
+  - installable root `SKILL.md`
+  - setup, model selection, auth guidance, and execution rules for agents
+- `agnes-ai-cli`
+  - standalone command runner and Node client
+  - local-file to public-URL bridge for Agnes image and video workflows
+  - normalized video polling and structured JSON output
+
+This keeps the skill lightweight while moving execution details into a tool
+that can version and ship independently.
+
 ## Install
 
 With a repository-aware skills installer:
@@ -56,6 +76,28 @@ npx skills add jomeswang/agnes-ai-skill --agent codex --yes
 
 The repository is discoverable as a single root-level skill named
 `agnes-ai-skill`.
+
+## Preferred Execution Path
+
+The skill repository is the install target. The CLI is the preferred execution
+layer when available.
+
+Recommended order:
+
+Supported CLI range for this skill release:
+
+- `>=0.1.0 <0.2.0`
+
+Recommended order:
+
+1. use a local `agnes` binary only when `agnes --version` falls inside
+   `>=0.1.0 <0.2.0`
+2. otherwise use `npx -y agnes-ai-cli@^0.1.0 ...`
+3. keep raw `curl` as the portability fallback
+
+This repository continues to keep `curl` examples because they are the most
+portable way to validate Agnes payloads, but the long-term execution model is
+skill guidance plus a separate CLI package.
 
 ## Model Guide
 
