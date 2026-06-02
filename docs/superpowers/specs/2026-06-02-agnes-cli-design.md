@@ -32,77 +32,66 @@ The current pain points are:
 - video polling and response normalization are repetitive
 - the execution layer is not yet reusable outside the skill itself
 
-## Approaches Considered
-
-### Approach A: Shell Scripts Only
-
-Keep expanding `scripts/*.sh` and let the skill call shell wrappers.
-
-Pros:
-
-- very small implementation surface
-- no package publishing setup
-- easy to inspect
-
-Cons:
-
-- weaker cross-platform behavior
-- argument parsing becomes brittle as commands grow
-- difficult to expose a reusable JS API
-- harder to maintain stable JSON output for agents
-
-Assessment:
-
-Useful as a transitional layer, but not the best long-term interface.
-
-### Approach B: Monorepo Skill + npm CLI Package
-
-Keep the repository as the public skill repo and add a package under
-`packages/agnes-ai-cli`.
-
-Pros:
-
-- the skill and execution layer stay versioned together
-- one public repo remains the canonical Agnes skill entry point
-- npm package and root skill can share docs and fixtures
-- agent installation and CLI evolution stay in sync
-
-Cons:
-
-- repository becomes slightly heavier
-- publish flow becomes more complex than a pure skill repo
-
-Assessment:
-
-Best balance for this project.
-
-### Approach C: Separate Repositories
-
-Keep `agnes-ai-skill` as skill-only and create a separate `agnes-ai-cli` repo.
-
-Pros:
-
-- clean separation of concerns
-- package repository can evolve independently
-
-Cons:
-
-- version drift between skill docs and CLI behavior
-- higher release coordination cost
-- more friction for contributors and users
-
-Assessment:
-
-Reasonable later, but not ideal for the next iteration.
-
 ## Recommendation
 
-Choose **Approach B: Monorepo Skill + npm CLI Package**.
+Choose a **dual-track architecture** instead of a root-level monorepo that
+mixes installable skill content and CLI source in the same copied directory.
 
-This keeps the current repository discoverable for `SKILL.md` installers while
-adding a real execution layer that agents and human users can share.
+### Track 1: `agnes-ai-skill`
 
-## Proposed Repository Structure
+Role:
+
+- install-friendly root skill repository
+- optimized for `npx skills add ... -g`
+- intentionally lightweight
+
+Responsibilities:
+
+- `SKILL.md`
+- `README.md`
+- minimal fallback helpers or tiny utility scripts
+- Agnes capability guidance, model selection, auth flow, and command strategy
+
+### Track 2: `agnes-ai-cli`
+
+Role:
+
+- executable npm package
+- reusable JS API for Node automation
+- canonical execution layer for Agnes requests
+
+Responsibilities:
+
+- provide the `agnes` CLI
+- provide the JS client API
+- normalize Agnes request shapes
+- bridge local file paths into temporary public URLs
+- own polling, output shaping, and validation
+
+## Why Not A Root-Level Monorepo
+
+Typical skill installers copy the selected skill directory.
+
+If the root of `agnes-ai-skill` stays the installable skill and the CLI source
+also lives under that root, installing the skill is likely to copy:
+
+- CLI source
+- package metadata
+- extra assets or examples tied to the package
+
+That would make the skill distribution heavier and blur the repository's role.
+
+The better boundary is:
+
+- `agnes-ai-skill` teaches agents what to do
+- `agnes-ai-cli` performs the work
+
+## Proposed Repository / Package Topology
+
+### Repository A: `agnes-ai-skill`
+
+Keep the current repository name and continue using it as the public skill
+distribution entry point.
 
 ```text
 agnes-ai-skill/
@@ -111,42 +100,49 @@ agnes-ai-skill/
   SKILL.md
   agents/
     openai.yaml
-  assets/
-  docs/
-    superpowers/
-      specs/
-        2026-06-02-agnes-cli-design.md
-  packages/
-    agnes-ai-cli/
-      package.json
-      README.md
-      bin/
-        agnes.js
-      src/
-        cli.ts
-        index.ts
-        config.ts
-        errors.ts
-        output.ts
-        auth/
-          check.ts
-          saveKey.ts
-        media/
-          toPublicUrl.ts
-          litterbox.ts
-        image/
-          generateImage.ts
-          normalizeImageRequest.ts
-        video/
-          generateVideo.ts
-          pollVideo.ts
-          normalizeVideoRequest.ts
-      test/
-        cli/
-        unit/
   scripts/
     agnes-media-url.sh
     extract_first_frames.swift
+```
+
+Notes:
+
+- `scripts/agnes-media-url.sh` may remain as a fallback or debugging helper
+- do not place full npm CLI source in this repository root
+
+### Repository / Package B: `agnes-ai-cli`
+
+Maintain the CLI as a separate npm package.
+
+```text
+agnes-ai-cli/
+  LICENSE
+  README.md
+  package.json
+  bin/
+    agnes.js
+  src/
+    cli.ts
+    index.ts
+    config.ts
+    errors.ts
+    output.ts
+    auth/
+      check.ts
+      saveKey.ts
+    media/
+      toPublicUrl.ts
+      litterbox.ts
+    image/
+      generateImage.ts
+      normalizeImageRequest.ts
+    video/
+      generateVideo.ts
+      pollVideo.ts
+      normalizeVideoRequest.ts
+  test/
+    cli/
+    unit/
 ```
 
 ## Package Scope
@@ -165,6 +161,24 @@ Recommendation:
 
 - Publish as `agnes-ai-cli` if available.
 - Fall back to `@jomeswang/agnes-ai-cli` only if the unscoped name is taken.
+
+## Skill / CLI Compatibility Contract
+
+The dual-track setup needs an explicit compatibility rule so the skill can call
+the CLI without silent drift.
+
+Rules:
+
+- the skill documents the minimum supported CLI major or minor version
+- a locally installed `agnes` binary may be used only if `agnes --version`
+  satisfies the declared compatible range
+- the preferred execution path is:
+  1. `agnes ...` only after version verification
+  2. `npx -y agnes-ai-cli@<supported-range> ...`
+  3. raw `curl` only as a fallback
+- the skill should not assume "latest" without a declared compatible range
+- when the CLI introduces breaking request-shape behavior, the skill must be
+  updated in the same release window
 
 ## CLI Design
 
@@ -214,79 +228,238 @@ However, the skill should prefer the explicit task commands, not the aliases.
 
 ## JS API Design
 
-### Public Exports
+### Public Entry Point
 
 ```ts
-export async function mediaUrl(input: string, options?: MediaUrlOptions): Promise<string>
-export async function checkAuth(): Promise<AuthCheckResult>
-export async function saveKey(key: string, options?: SaveKeyOptions): Promise<SaveKeyResult>
-export async function generateImage(options: GenerateImageOptions): Promise<GenerateImageResult>
-export async function generateVideo(options: GenerateVideoOptions): Promise<GenerateVideoResult>
-export async function pollVideo(taskId: string, options?: PollVideoOptions): Promise<PollVideoResult>
+const agnes = createAgnesClient(config)
+
+agnes.auth.check()
+
+agnes.media.toPublicUrl(input, options?)
+
+agnes.image.generate(options)
+
+agnes.video.generate(options)
+agnes.video.poll(taskId, options?)
 ```
 
-### Why Unified `generateImage` / `generateVideo`
+Use a `Client + namespaced services` shape instead of exposing top-level
+`generateImage()` / `generateVideo()` functions directly.
 
-The internal API should not expose only `imageToVideo()` because Agnes video
-supports at least these documented modes:
+This preserves:
+
+- clearer capability grouping
+- a single config entry point
+- a smaller top-level API surface
+- room for future providers, logging, retries, and defaults
+
+Shell startup-file mutation should stay CLI-only. The JS API should not expose a
+public method that edits `~/.zshrc`, `~/.bashrc`, or `~/.profile`.
+
+### Why JS Should Use Unified `image.generate()` / `video.generate()`
+
+If the public JS API exposes many task-specific methods such as:
+
+- `textToImage()`
+- `imageToImage()`
+- `composeImage()`
+- `textToVideo()`
+- `imageToVideo()`
+- `multiImageVideo()`
+- `keyframesVideo()`
+
+it starts out readable, but it fragments quickly as new modes and provider
+differences appear.
+
+Agnes capabilities are a better fit for a unified `generate()` surface with
+mode-based branching.
+
+Images:
+
+- text-to-image
+- image-to-image
+- multi-image composition
+
+Video:
 
 - text-to-video
 - image-to-video
 - multi-image video
 - keyframe video
 
-The same logic applies to image generation:
+So the design should intentionally split the layers:
 
-- text-to-image
-- image-to-image
-- multi-image composition
+- CLI: explicit task-shaped commands
+- JS API: unified `generate()` methods keyed by `mode`
 
-So the CLI should expose task-shaped commands, while the implementation should
-funnel into unified internal functions.
+That gives the best compatibility story without bloating the public JS API.
+
+### Recommended Client Shape
+
+```ts
+const agnes = createAgnesClient({
+  apiKey: process.env.AGNES_API_KEY,
+})
+
+await agnes.image.generate({
+  mode: "text2img",
+  prompt: "A luminous floating city above a misty canyon at sunrise",
+})
+
+await agnes.image.generate({
+  mode: "img2img",
+  image: "/path/to/input.png",
+  prompt: "Preserve the silhouette and convert the scene into a bright editorial campaign",
+})
+
+await agnes.video.generate({
+  mode: "img2video",
+  image: "/path/to/frame.png",
+  prompt: "Keep the hero subject stable while adding subtle wind and a soft push-in",
+})
+
+await agnes.video.generate({
+  mode: "keyframes",
+  images: ["frame-a.png", "frame-b.png"],
+  prompt: "Create a smooth premium transition between the two frames",
+})
+
+await agnes.video.poll("task_123")
+```
 
 ### Type Shapes
 
 ```ts
-type GenerateImageOptions = {
-  model?: "agnes-image-2.1-flash" | "agnes-image-2.0-flash"
-  prompt: string
-  images?: string[]
-  size?: string
-  responseFormat?: "url"
-  seed?: number
-  ttl?: "1h" | "12h" | "24h" | "72h"
-}
+type ImageGenerateOptions =
+  | {
+      mode: "text2img"
+      model?: "agnes-image-2.1-flash" | "agnes-image-2.0-flash"
+      prompt: string
+      size?: string
+      responseFormat?: "url"
+      seed?: number
+    }
+  | {
+      mode: "img2img"
+      model?: "agnes-image-2.1-flash" | "agnes-image-2.0-flash"
+      image: string
+      prompt: string
+      size?: string
+      responseFormat?: "url"
+      seed?: number
+      ttl?: "1h" | "12h" | "24h" | "72h"
+    }
+  | {
+      mode: "compose"
+      model?: "agnes-image-2.1-flash" | "agnes-image-2.0-flash"
+      images: string[]
+      prompt: string
+      size?: string
+      responseFormat?: "url"
+      seed?: number
+      ttl?: "1h" | "12h" | "24h" | "72h"
+    }
 
-type GenerateVideoOptions = {
-  prompt: string
-  images?: string[]
-  mode?: "standard" | "keyframes"
-  width?: number
-  height?: number
-  numFrames?: number
-  frameRate?: number
-  seed?: number
-  negativePrompt?: string
-  ttl?: "1h" | "12h" | "24h" | "72h"
-}
+type VideoGenerateOptions =
+  | {
+      mode: "text2video"
+      prompt: string
+      width?: number
+      height?: number
+      numFrames?: number
+      frameRate?: number
+      seed?: number
+      negativePrompt?: string
+    }
+  | {
+      mode: "img2video"
+      image: string
+      prompt: string
+      width?: number
+      height?: number
+      numFrames?: number
+      frameRate?: number
+      seed?: number
+      negativePrompt?: string
+      ttl?: "1h" | "12h" | "24h" | "72h"
+    }
+  | {
+      mode: "multivideo"
+      images: string[]
+      prompt: string
+      width?: number
+      height?: number
+      numFrames?: number
+      frameRate?: number
+      seed?: number
+      negativePrompt?: string
+      ttl?: "1h" | "12h" | "24h" | "72h"
+    }
+  | {
+      mode: "keyframes"
+      images: string[]
+      prompt: string
+      width?: number
+      height?: number
+      numFrames?: number
+      frameRate?: number
+      seed?: number
+      negativePrompt?: string
+      ttl?: "1h" | "12h" | "24h" | "72h"
+    }
 ```
 
 ### Internal Mapping Rules
 
 For images:
 
-- no `images` -> text-to-image
-- `images.length >= 1` with Image 2.1 -> `extra_body.image`
-- `images.length >= 1` with Image 2.0 -> `tags: ["img2img"]` plus
+- `mode: "text2img"` -> text-to-image
+- `mode: "img2img"` -> single-image image-to-image
+- `mode: "compose"` -> multi-image composition
+- Image 2.1 with image input -> `extra_body.image`
+- Image 2.0 with image input -> `tags: ["img2img"]` plus
   `extra_body.image`
 
 For video:
 
-- no `images` -> text-to-video
-- `images.length === 1` -> top-level `image`
-- `images.length >= 2` and mode `standard` -> `extra_body.image`
-- `images.length >= 2` and mode `keyframes` -> `extra_body.image` plus
+- `mode: "text2video"` -> text-to-video
+- `mode: "img2video"` -> top-level `image`
+- `mode: "multivideo"` -> `extra_body.image`
+- `mode: "keyframes"` -> `extra_body.image` plus
   `extra_body.mode = "keyframes"`
+
+### Video Validation And Defaults
+
+The design should bake Agnes-specific validation into the CLI and JS layer
+instead of leaving it to ad hoc request assembly.
+
+Recommended defaults:
+
+- `width: 1152`
+- `height: 768`
+- `numFrames: 121`
+- `frameRate: 24`
+
+Required validation:
+
+- `numFrames <= 441`
+- `numFrames` must satisfy `8n + 1`
+- `frameRate` must be in `1-60`
+- `mode: "img2video"` requires exactly one image
+- `mode: "multivideo"` requires at least two images
+- `mode: "keyframes"` requires at least two images
+
+Invalid settings should fail before any Agnes request is sent.
+
+### Why CLI And JS Should Intentionally Differ
+
+This is a deliberate split:
+
+- CLI: explicit task-shaped commands
+- JS API: unified `generate()` surface
+
+The CLI optimizes for discoverability and help text.
+The JS API optimizes for compatibility and long-term extension.
 
 ## Local File Handling
 
@@ -330,6 +503,18 @@ Future candidates:
 - Google Cloud Storage
 - custom provider interface
 
+### URL Bridge Behavior
+
+The bridge behavior should be deterministic:
+
+- repeated `--image` inputs preserve input order exactly
+- duplicate local paths may be uploaded once per command invocation and reused
+  in-place in the normalized request
+- if any upload fails, the whole command fails before sending the Agnes request
+- default TTL is `1h`
+- commands that start long-running Agnes video jobs should allow explicit TTL
+  override and document that longer jobs may require `12h` or `24h`
+
 ## Output Contract
 
 The CLI should support:
@@ -364,9 +549,73 @@ Examples:
 }
 ```
 
+### Video Task Normalization
+
+The CLI and JS API must normalize Agnes async video responses into a stable
+shape, regardless of whether the raw API returns `id` or `task_id`.
+
+Recommended normalized task object:
+
+```json
+{
+  "ok": true,
+  "taskId": "task_123",
+  "status": "queued",
+  "rawStatus": "queued",
+  "model": "agnes-video-v2.0"
+}
+```
+
+Recommended normalized poll result:
+
+```json
+{
+  "ok": true,
+  "taskId": "task_123",
+  "status": "completed",
+  "videoUrl": "https://...",
+  "seconds": 10.0,
+  "size": "1152x768"
+}
+```
+
+Guaranteed status enum:
+
+- `queued`
+- `in_progress`
+- `completed`
+- `failed`
+- `timed_out`
+
+Rules:
+
+- map raw `id` or `task_id` into `taskId`
+- preserve the raw provider status as `rawStatus` when useful
+- `video.generate()` returns a normalized task object and does not auto-poll
+- `video.poll()` returns a normalized terminal result object
+- `video poll --json` must define structured output for:
+  - `failed`
+  - `404`
+  - `503`
+  - timeout
+
+Recommended failure shape:
+
+```json
+{
+  "ok": false,
+  "taskId": "task_123",
+  "status": "failed",
+  "code": "TASK_FAILED",
+  "message": "Agnes video task failed"
+}
+```
+
 ## Auth Behavior
 
 The CLI should use the same Agnes key behavior already documented in the skill.
+The JS API should limit itself to inspection and runtime config, not shell file
+mutation.
 
 ### `agnes auth check`
 
@@ -384,6 +633,18 @@ Rules:
 - update existing export if present
 - export into the current process for child calls when possible
 - never echo the full key back
+
+### JS Auth Surface
+
+Recommended public JS auth surface:
+
+- `agnes.auth.check()`
+
+Optional internal or advanced surface:
+
+- `resolveAuthConfig()`
+
+Do not expose shell-rc mutation as a routine public JS API.
 
 ## Error Handling
 
@@ -406,6 +667,14 @@ For `--json`, errors should still print machine-readable output:
 }
 ```
 
+Video-specific error codes should include at least:
+
+- `TASK_FAILED`
+- `TASK_NOT_FOUND`
+- `SERVICE_BUSY`
+- `POLL_TIMEOUT`
+- `INVALID_VIDEO_SETTINGS`
+
 ## Skill Integration
 
 The root `SKILL.md` should eventually prefer CLI commands over raw `curl`
@@ -413,8 +682,9 @@ whenever the CLI is available.
 
 Preferred hierarchy:
 
-1. use `agnes` CLI if installed
-2. otherwise fall back to the shell helper or raw `curl`
+1. use local `agnes` only if `agnes --version` satisfies the supported range
+2. otherwise use `npx -y agnes-ai-cli@<supported-range> ...`
+3. otherwise fall back to the shell helper or raw `curl`
 
 The skill should keep the minimal `curl` examples for portability, but treat the
 CLI as the preferred execution path.
@@ -423,18 +693,26 @@ CLI as the preferred execution path.
 
 ### npm
 
-- package published from `packages/agnes-ai-cli`
+- package published from the dedicated `agnes-ai-cli` package repository
 - executable name: `agnes`
 - versioning should start at `0.1.0`
 
-### Repository
+### Skill Repository
 
-The root repository remains the canonical source for:
+`agnes-ai-skill` remains the canonical source for:
 
 - the skill install experience
-- README and showcase
-- CLI package source
-- package documentation
+- skill-facing README and showcase
+- skill documentation and compatibility guidance
+
+### CLI Repository
+
+`agnes-ai-cli` remains the canonical source for:
+
+- CLI source
+- JS API source
+- package README
+- release and npm publish workflow
 
 ## Testing Strategy
 
@@ -444,6 +722,12 @@ The root repository remains the canonical source for:
 - local-path vs URL passthrough behavior
 - rc file selection logic
 - JSON output formatting
+- `task_id` vs `id` normalization
+- video status mapping
+- validation of `numFrames <= 441`
+- validation of `numFrames = 8n + 1`
+- validation of `frameRate` in `1-60`
+- default TTL behavior and explicit TTL override
 
 ### CLI Tests
 
@@ -451,6 +735,7 @@ The root repository remains the canonical source for:
 - `agnes image text2img --help`
 - `agnes video keyframes --help`
 - `agnes auth check`
+- `agnes video poll task_123 --json`
 
 ### Integration Tests
 
@@ -468,7 +753,7 @@ Optional live tests behind environment flags:
 
 ### Phase 1
 
-- scaffold `packages/agnes-ai-cli`
+- scaffold the standalone `agnes-ai-cli` package repository
 - implement `auth check`, `auth save-key`, and `media url`
 
 ### Phase 2
@@ -491,7 +776,8 @@ This design is successful when:
 2. local file inputs for Agnes image/video flows are bridged automatically
 3. the public skill repository remains installable as a root-level skill
 4. the CLI can be published independently to npm
-5. the implementation remains small enough to maintain in the existing repo
+5. video task normalization and validation are stable enough that agents do not
+   need to guess raw Agnes response differences
 
 ## Open Questions
 
