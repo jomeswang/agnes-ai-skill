@@ -210,15 +210,19 @@ Choose the smallest suitable Agnes model path:
 
 - `agnes-2.0-flash`
   - chat, coding, tool calling, structured agent work, fast production tasks
+  - default when `text chat` runs without `--model`
 - `agnes-image-2.1-flash`
   - default for new text-to-image and straightforward image-to-image work
   - especially useful for denser layouts and stronger semantic alignment
+  - default when `image text2img`, `image img2img`, or `image compose` runs
+    without `--model`
 - `agnes-image-2.0-flash`
   - use when the user explicitly wants Image 2.0
   - useful for edit-heavy or multi-image composition flows
 - `agnes-video-v2.0`
   - use for text-to-video, image-to-video, multi-image guided video, and
     keyframes
+  - current default when any `video` generate command runs without `--model`
 
 ## CLI Command Map
 
@@ -248,6 +252,7 @@ npx -y agnes-ai-cli@^0.1.0 text chat --prompt "Reply with exactly pong."
 ```
 
 Use this for one-shot text verification, coding help, or small agent checks.
+If `--model` is omitted here, the CLI defaults to `agnes-2.0-flash`.
 
 ### Image
 
@@ -269,6 +274,7 @@ Use:
 - `text2img` for prompt-only image generation
 - `img2img` for one input image
 - `compose` for multiple input images
+- if `--model` is omitted, the CLI defaults to `agnes-image-2.1-flash`
 
 ### Video
 
@@ -300,6 +306,7 @@ Use:
 - `multivideo` for multiple guiding images
 - `keyframes` for explicit keyframe interpolation
 - `poll` for asynchronous completion
+- if `--model` is omitted, current CLI behavior uses `agnes-video-v2.0`
 
 ## Practical CLI Workflow
 
