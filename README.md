@@ -122,16 +122,20 @@ Use the repository skill with these defaults:
 
 - `agnes-2.0-flash`
   - chat, coding, streaming, tool calling, and agent workflows
+  - default when `text chat` runs without `--model`
 - `agnes-image-2.1-flash`
   - default for new text-to-image and image-to-image work
   - strongest fit for denser layouts, richer detail, and better semantic
     alignment
+  - default when `image text2img`, `image img2img`, or `image compose` runs
+    without `--model`
 - `agnes-image-2.0-flash`
   - better when you explicitly need its documented `tags: ["img2img"]` flow,
     multi-image composition, or `seed`-based reproducibility
 - `agnes-video-v2.0`
   - text-to-video, image-to-video, multi-image guided video, keyframes, and
     asynchronous polling
+  - current default when any `video` generate command runs without `--model`
 
 The official docs also give each model fairly different best practices:
 
