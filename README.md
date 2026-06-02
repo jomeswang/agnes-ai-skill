@@ -54,6 +54,20 @@ The intended split is:
 This keeps the skill lightweight while moving execution details into a tool
 that can version and ship independently.
 
+## Companion CLI
+
+The published execution package for this skill is:
+
+- npm: [`agnes-ai-cli`](https://www.npmjs.com/package/agnes-ai-cli)
+- GitHub: [`jomeswang/agnes-ai-cli`](https://github.com/jomeswang/agnes-ai-cli)
+
+Install it when you want stable commands instead of hand-written `curl`:
+
+```bash
+npm install -g agnes-ai-cli
+agnes --help
+```
+
 ## Install
 
 With a repository-aware skills installer:
