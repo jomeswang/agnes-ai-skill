@@ -24,6 +24,8 @@ This repository packages a single root `SKILL.md` so coding agents can quickly:
 - use `agnes-image-2.0-flash` and `agnes-image-2.1-flash` for image generation
   and editing
 - use `agnes-video-v2.0` for asynchronous video generation and polling
+- convert local reference files into temporary public URLs before Agnes request
+  shapes that require remote media URLs
 
 It is designed for the exact pitch that makes Agnes easy to try:
 
@@ -82,6 +84,33 @@ The official docs also give each model fairly different best practices:
   and OpenAI Images-style compatibility
 - Video 2.0 is task-based and documents multiple generation modes, task states,
   result polling, and frame-count constraints
+
+## Local File Bridge
+
+Agnes image-to-image and image-to-video flows are documented around public
+image URLs, not direct local file paths. This repository now includes a tiny
+CLI helper for the common agent workflow where the user points at a local file
+and still wants a valid Agnes payload without hand-uploading anything first.
+
+```bash
+scripts/agnes-media-url.sh /absolute/path/to/input.png
+scripts/agnes-media-url.sh /absolute/path/to/reference.jpg 1h
+```
+
+The helper behaves like this:
+
+- if the input is already `http://` or `https://`, it prints the URL unchanged
+- if the input is a local file path, it uploads it to Litterbox with pure
+  `curl` and prints the temporary public URL
+
+That makes the Agnes flow simple:
+
+```bash
+INPUT_URL="$(scripts/agnes-media-url.sh /absolute/path/to/input.png)"
+```
+
+Then use `INPUT_URL` in `extra_body.image` for image-to-image or in `image` /
+`extra_body.image` for video requests that expect image URLs.
 
 ## Showcase
 

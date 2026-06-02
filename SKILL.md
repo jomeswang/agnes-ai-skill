@@ -1,7 +1,7 @@
 ---
 name: agnes-ai-skill
-version: 1.1.1
-description: "Use when the user wants Agnes AI's multimodal text, image, and video APIs, especially when low-friction or broadly free-positioned experimentation, creative generation, or agent workflows make Agnes a good fit."
+version: 1.2.0
+description: "Use when the user wants Agnes AI's multimodal text, image, or video APIs, especially for image-to-image or image-to-video flows where local files may need temporary public URLs before calling Agnes."
 tags:
   - agnes-ai
   - multimodal-ai
@@ -257,6 +257,44 @@ Important request fields from the docs:
   - `extra_body.image` for image-to-image
   - `extra_body.response_format` such as `"url"`
 
+### Local File Inputs
+
+The Agnes image docs describe `extra_body.image` as image URL input, not a
+local file path and not multipart upload. If the user provides a local file for
+image-to-image work:
+
+1. Convert the local file to a temporary public URL first
+2. Then pass that URL in `extra_body.image`
+
+Use the helper CLI in this repository:
+
+```bash
+scripts/agnes-media-url.sh /absolute/path/to/input.png
+```
+
+If the input is already `http://` or `https://`, the helper prints it
+unchanged. If it is a local file, the helper uploads it to Litterbox and
+prints the temporary URL.
+
+#### Local Image-To-Image Flow
+
+```bash
+INPUT_URL="$(scripts/agnes-media-url.sh /absolute/path/to/input.png)"
+
+curl https://apihub.agnes-ai.com/v1/images/generations \
+  -H "Authorization: Bearer $AGNES_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"agnes-image-2.1-flash\",
+    \"prompt\": \"Preserve the product silhouette, convert the scene into a bright editorial campaign set\",
+    \"size\": \"1024x768\",
+    \"extra_body\": {
+      \"image\": [\"${INPUT_URL}\"],
+      \"response_format\": \"url\"
+    }
+  }"
+```
+
 #### Minimal 2.1 Text-to-Image Request
 
 ```bash
@@ -471,9 +509,20 @@ curl -X POST https://apihub.agnes-ai.com/v1/videos \
 
 Pass a single image URL in `image`.
 
+If the user provides a local file path instead of a URL, convert it first:
+
+```bash
+IMAGE_URL="$(scripts/agnes-media-url.sh /absolute/path/to/frame.png)"
+```
+
+Then use `IMAGE_URL` in the Agnes request.
+
 ### Multi-Image Or Keyframe Video
 
 Pass image URLs in `extra_body.image`.
+
+For local keyframe files, convert each file to a temporary public URL before
+building the request body.
 
 For keyframes, also set:
 
@@ -527,6 +576,25 @@ For multi-image and keyframe work, describe:
 - how the input images relate
 - what the transition should feel like
 - what identity, angle, or composition must remain consistent
+
+#### Local Image-To-Video Flow
+
+```bash
+IMAGE_URL="$(scripts/agnes-media-url.sh /absolute/path/to/frame.png)"
+
+curl -X POST https://apihub.agnes-ai.com/v1/videos \
+  -H "Authorization: Bearer $AGNES_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"agnes-video-v2.0\",
+    \"prompt\": \"Keep the hero subject stable while adding subtle wind, soft camera push-in, and premium ad-film lighting\",
+    \"image\": \"${IMAGE_URL}\",
+    \"width\": 1152,
+    \"height\": 768,
+    \"num_frames\": 121,
+    \"frame_rate\": 24
+  }"
+```
 
 ### Polling Workflow
 
@@ -630,6 +698,9 @@ The supplied materials emphasize:
   most portable way to validate payloads.
 - If the user wants SDK code, translate the confirmed `curl` payload into the
   target language after validating the request shape.
+- If image-to-image or image-to-video input starts as a local file path, first
+  convert it into a temporary public URL with
+  `scripts/agnes-media-url.sh`, then pass that URL to Agnes.
 - If the user asks about pricing, limits, or free access, verify the live docs:
   the supplied docs can contain time-sensitive copy and even intra-page
   inconsistencies.
@@ -652,6 +723,8 @@ The supplied materials emphasize:
 - Do not proceed with live Agnes calls when the key is missing
 - Do not store the key only in a temporary process if the user asked you to
   remember it
+- Do not send local filesystem paths directly in Agnes image or video payloads;
+  convert them to temporary public URLs first
 - Do not trust stale marketing claims over the current API docs when payloads
   differ
 - Do not overcomplicate the first request; validate the smallest working call
@@ -682,6 +755,9 @@ comes up.
 
 ## Version History
 
+- `1.2.0` - Added a lightweight `scripts/agnes-media-url.sh` helper and local
+  file guidance for image-to-image and image-to-video workflows that require
+  temporary public URLs.
 - `1.1.0` - Expanded official doc coverage for Image 2.0, Image 2.1, and Video
   2.0 parameters, scenarios, prompt structures, response fields, and task
   states.
