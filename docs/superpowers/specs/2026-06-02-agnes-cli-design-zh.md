@@ -158,6 +158,39 @@ agnes-ai-cli/
 - 命令要尽量贴近任务场景，让 agent 好选、人也好记
 - 内部实现统一，外部命令清晰
 
+### 技术选型
+
+推荐使用成熟开源库，不建议手写参数解析器。
+
+建议组合：
+
+- `commander`
+  - 作为 CLI 主框架
+  - 负责子命令、参数解析、`--help`、`--version`
+- `zod`
+  - 作为参数校验和内部 options 归一化层
+  - 让 CLI 参数校验和 JS API 参数校验复用同一套规则
+- Node 原生 `fetch` / `FormData`
+  - 作为 Agnes API 与 Litterbox 上传的 HTTP 层
+  - 尽量避免为简单请求额外引入过多网络依赖
+- 可选 `picocolors`
+  - 用于命令行输出的轻量着色
+  - 不是必须依赖
+
+不建议作为第一选择：
+
+- `yargs`
+  - 功能很强，但对这个项目来说偏重
+- `cac`
+  - 可以用，但在多层命令和帮助信息组织上不如 `commander` 稳妥
+
+当前推荐结论：
+
+- CLI 框架：`commander`
+- 参数校验：`zod`
+- HTTP / 上传：Node 原生 `fetch` + `FormData`
+- 输出美化：可选 `picocolors`
+
 ### 推荐命令树
 
 ```text
@@ -183,6 +216,48 @@ agnes video poll <task-id> [--interval 3] [--timeout 600]
 - `keyframes` 单独暴露更清晰，因为它本来就是 Agnes 的特殊模式
 - `poll` 是视频异步任务的一等操作，不应该被埋掉
 - 比 `video generate` 更利落，也更容易让 agent 命中
+
+### `--help` 设计要求
+
+CLI 必须内建完整帮助系统，而不是只在 README 里说明。
+
+至少要支持：
+
+```bash
+agnes --help
+agnes auth --help
+agnes media --help
+agnes image --help
+agnes image img2img --help
+agnes video --help
+agnes video keyframes --help
+```
+
+每一层帮助都应包含：
+
+- 这个命令的用途
+- 必填参数
+- 可选参数
+- 至少 1 个最小示例
+- 与 Agnes request shape 对应的场景说明
+
+例如 `agnes video keyframes --help` 应明确说明：
+
+- 这是 Agnes `keyframes` 模式
+- 需要 2 张或以上图片
+- `--image` 可重复传入
+- 常用参数：
+  - `--width`
+  - `--height`
+  - `--num-frames`
+  - `--frame-rate`
+  - `--seed`
+  - `--json`
+
+帮助信息应同时面向：
+
+- 人类开发者
+- 直接读取命令输出的 agent
 
 ### 是否保留别名
 
