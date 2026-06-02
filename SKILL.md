@@ -632,8 +632,10 @@ The supplied materials emphasize:
   and known to be compatible.
 - If a local `agnes` command is available, use it only when
   `agnes --version` falls inside `>=0.1.0 <0.2.0`.
-- If that version check does not pass, prefer
-  `npx -y agnes-ai-cli@^0.1.0 ...` before writing raw request code by hand.
+- If that version check does not pass, the current verified install path for the
+  companion CLI is `npm install -g github:jomeswang/agnes-ai-cli`; after
+  installation, retry with local `agnes` before writing raw request code by
+  hand.
 - If the CLI is not available, keep `curl` as the portability fallback for
   validating payloads.
 - If the user wants code examples, default to `curl` examples when you need the
