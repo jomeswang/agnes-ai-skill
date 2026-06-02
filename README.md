@@ -39,7 +39,7 @@ API calls successfully without copying the full docs into the repository.
 With a repository-aware skills installer:
 
 ```bash
-npx skills add jomeswang/agnes-ai-skill
+npx skills add jomeswang/agnes-ai-skill -g
 ```
 
 Because this repository uses a single root `SKILL.md`, installers that support
