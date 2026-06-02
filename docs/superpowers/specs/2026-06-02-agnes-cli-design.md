@@ -197,6 +197,8 @@ agnes auth save-key [--key <value>]
 
 agnes media url <file-or-url> [--ttl 1h|12h|24h|72h]
 
+agnes text chat --prompt <text> [--model agnes-2.0-flash] [--json]
+
 agnes image text2img --prompt <text> [options]
 agnes image img2img --image <path-or-url> --prompt <text> [options]
 agnes image compose --image <path-or-url> --image <path-or-url> --prompt <text> [options]
@@ -210,6 +212,8 @@ agnes video poll <task-id> [--interval 3] [--timeout 600]
 
 ### Why This Tree
 
+- `text chat` preserves a minimal Agnes text entry point so agents can complete
+  Agnes text, image, and video flows through the CLI
 - `text2img`, `img2img`, `text2video`, and `img2video` are concrete and easy
   for agents to choose
 - `keyframes` stays explicit because it has a distinct Agnes request mode
@@ -237,6 +241,8 @@ agnes.auth.check()
 
 agnes.media.toPublicUrl(input, options?)
 
+agnes.text.complete(options)
+
 agnes.image.generate(options)
 
 agnes.video.generate(options)
@@ -255,6 +261,13 @@ This preserves:
 
 Shell startup-file mutation should stay CLI-only. The JS API should not expose a
 public method that edits `~/.zshrc`, `~/.bashrc`, or `~/.profile`.
+
+Text should keep a lightweight public entry point:
+
+- `agnes.text.complete()`
+
+This lets Node workflows run the smallest Agnes text request without dropping
+down to raw `fetch`.
 
 ### Why JS Should Use Unified `image.generate()` / `video.generate()`
 
@@ -732,6 +745,7 @@ CLI as the preferred execution path.
 ### CLI Tests
 
 - `agnes media url https://example.com/x.png`
+- `agnes text chat --help`
 - `agnes image text2img --help`
 - `agnes video keyframes --help`
 - `agnes auth check`
@@ -754,7 +768,7 @@ Optional live tests behind environment flags:
 ### Phase 1
 
 - scaffold the standalone `agnes-ai-cli` package repository
-- implement `auth check`, `auth save-key`, and `media url`
+- implement `auth check`, `auth save-key`, `media url`, and `text chat`
 
 ### Phase 2
 
