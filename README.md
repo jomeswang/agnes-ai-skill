@@ -4,16 +4,47 @@
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-SKILL.md-blue)](./SKILL.md)
 [![Models](https://img.shields.io/badge/models-text%20%7C%20image%20%7C%20video-black)](https://agnes-ai.com/doc)
 [![Agnes AI](https://img.shields.io/badge/platform-Agnes%20AI-ff6b3d)](https://platform.agnes-ai.com/)
+[![Chinese README](https://img.shields.io/badge/docs-%E4%B8%AD%E6%96%87-blue)](./README.zh-CN.md)
 
-> One install target for Agnes AI text, image, and video APIs.
+## 📣 Important Announcement
 
-> One skill for Agnes AI's full multimodal stack: text, image, and video APIs.
->
-> Based on the supplied June 2026 materials, Agnes publicly positioned its core
-> multimodal APIs as broadly free to try and attractive for high-frequency
-> developer and creator workflows. The live model docs now also include pricing
-> sections, so keep the "free" message as a strong but time-sensitive platform
-> positioning and verify current commercial terms when spending matters.
+**Agnes 2.0 full-modal model APIs are officially open for free global calls.**
+
+- ✅ No fixed end date, full-modal access, and free API calls within RPM 20
+- ✅ Register on the official platform → create a key → call directly
+- ✅ Text, image, and video are all supported
+- ✅ Models keep upgrading while free access is maintained
+
+**Official platform:** https://platform.agnes-ai.com
+
+> The live official model docs also include pricing sections. For cost, quota,
+> or commercial use, check the current official docs first.
+
+## Quick Start
+
+Put `SKILL.md` in your AI tool's skill directory, or copy this sentence to your
+agent:
+
+```text
+Please read and install Agnes AI Skill: https://github.com/jomeswang/agnes-ai-skill
+```
+
+After installation, create an Agnes API key at
+[platform.agnes-ai.com/settings/apiKeys](https://platform.agnes-ai.com/settings/apiKeys)
+and configure it as `AGNES_API_KEY`. Then tell the agent `generate an image`,
+`generate a video`, or `integrate Agnes API`, and it can choose the proper Agnes
+model and execution path automatically.
+
+This skill helps agents:
+
+- guide new users through Agnes AI setup and API key creation
+- choose the right capability across text, image, and video models
+- prefer the companion `agnes-ai-cli` for live requests
+- guide integrations for Codex, OpenClaw, Claude Code/Desktop, Hermes,
+  WorkBuddy, Cherry Studio, Opencode, and similar agent tools
+
+Compatible tools: OpenClaw, Claude Code, Claude Desktop, Hermes, Codex,
+WorkBuddy, Cherry Studio, Opencode, Kimi Work.
 
 ![Agnes AI frontier models hero](./assets/images/agnes-frontier-models-banner.jpg)
 
@@ -33,40 +64,6 @@ It is designed for the exact pitch that makes Agnes easy to try:
 
 The skill stays intentionally lightweight. It teaches agents how to make Agnes
 API calls successfully without copying the full docs into the repository.
-
-## Dual-Track Layout
-
-This repository stays focused on the installable root skill. The companion
-execution layer is designed as a separate CLI package so skill installs do not
-pull a full command runtime into `~/.codex/skills` or project-local skill
-directories.
-
-The intended split is:
-
-- `agnes-ai-skill`
-  - installable root `SKILL.md`
-  - setup, model selection, auth guidance, and execution rules for agents
-- `agnes-ai-cli`
-  - standalone command runner and Node client
-  - local-file to public-URL bridge for Agnes image and video workflows
-  - normalized video polling and structured JSON output
-
-This keeps the skill lightweight while moving execution details into a tool
-that can version and ship independently.
-
-## Companion CLI
-
-The published companion execution layer is:
-
-- npm: [`agnes-ai-cli`](https://www.npmjs.com/package/agnes-ai-cli)
-- GitHub: [`jomeswang/agnes-ai-cli`](https://github.com/jomeswang/agnes-ai-cli)
-
-Install it when you want stable commands instead of hand-written requests:
-
-```bash
-npm install -g agnes-ai-cli
-agnes --help
-```
 
 ## Install
 
@@ -91,30 +88,19 @@ npx skills add jomeswang/agnes-ai-skill --agent codex --yes
 The repository is discoverable as a single root-level skill named
 `agnes-ai-skill`.
 
-## Preferred Execution Path
+## Companion CLI
 
-The skill repository is the install target. The CLI is the preferred execution
-layer when available.
+The published companion execution layer is:
 
-Recommended order:
+- npm: [`agnes-ai-cli`](https://www.npmjs.com/package/agnes-ai-cli)
+- GitHub: [`jomeswang/agnes-ai-cli`](https://github.com/jomeswang/agnes-ai-cli)
 
-Supported CLI range for this skill release:
+Install it when you want stable commands instead of hand-written requests:
 
-- `>=0.1.0 <0.2.0`
-
-Recommended order:
-
-1. first use `npx -y agnes-ai-cli@^0.1.0 --help` in fresh or unknown
-   environments
-2. use a local `agnes` binary only when `agnes --version` falls inside
-   `>=0.1.0 <0.2.0`
-3. otherwise use `npx -y agnes-ai-cli@^0.1.0 ...`
-4. treat the CLI as the execution path and keep the skill focused on model
-   choice, auth, and command selection
-
-This repository is now aligned around a CLI-first execution model: the skill
-decides which Agnes command to run, and the companion CLI performs the live
-text, image, and video requests.
+```bash
+npm install -g agnes-ai-cli
+agnes --help
+```
 
 ## Model Guide
 
