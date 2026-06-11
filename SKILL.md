@@ -1,6 +1,6 @@
 ---
 name: agnes-ai-skill
-version: 1.2.1
+version: 1.2.2
 description: "Use when the user wants Agnes AI text, image, or video generation and should execute it through the agnes-ai-cli command line instead of hand-writing raw HTTP requests."
 tags:
   - agnes-ai
@@ -103,6 +103,27 @@ If `AGNES_API_KEY` is missing and the task requires live Agnes access:
 4. Ask them to provide the key if they want you to save it for future use.
 
 Do not continue with live Agnes calls until a valid key exists.
+
+## Chinese Quick Start Response
+
+When a Chinese-speaking user asks how to get started, install, or use Agnes
+from an agent tool, give them this concise copy-paste path:
+
+```text
+Please read and install Agnes AI Skill: https://github.com/jomeswang/agnes-ai-skill
+```
+
+Then explain:
+
+- install the skill into the agent's skill directory or use a repository-aware
+  installer such as `npx skills add jomeswang/agnes-ai-skill -g`
+- create an Agnes API key at `https://platform.agnes-ai.com/settings/apiKeys`
+  and configure it as `AGNES_API_KEY`
+- say `generate an image`, `generate a video`, or `integrate Agnes API`
+- the agent should choose the proper Agnes model and use `agnes-ai-cli` when it
+  is available
+
+Keep this onboarding short before moving into model-specific details.
 
 ## Persisting The Key Permanently
 
@@ -488,6 +509,8 @@ comes up.
 
 ## Version History
 
+- `1.2.2` - Added a linked Chinese README and Chinese quick-start onboarding
+  guidance for agent responses.
 - `1.2.1` - Made `npx -y agnes-ai-cli@^0.1.0` the default copy-paste execution
   path in fresh environments and kept global `agnes` as an optional fast path.
 - `1.2.0` - Switched the skill to CLI-first Agnes execution, removed raw curl
