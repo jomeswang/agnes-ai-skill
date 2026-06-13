@@ -1,0 +1,4 @@
+scripts/extract_first_frames.swift linguist-documentation
+scripts/*.sh linguist-documentation
+examples/apps/*.html linguist-documentation
+docs/superpowers/specs/*.md linguist-documentation
