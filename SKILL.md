@@ -329,7 +329,7 @@ npx -y agnes-ai-cli@^0.1.0 video keyframes \
   --image ./frame-b.png \
   --prompt "Transition between these frames with a polished morph"
 
-npx -y agnes-ai-cli@^0.1.0 video poll task_123 --interval 3 --timeout 600
+npx -y agnes-ai-cli@^0.1.0 video poll video_123 --interval 5 --timeout 600
 ```
 
 Use:
@@ -451,12 +451,12 @@ Examples:
 ```bash
 npx -y agnes-ai-cli@^0.1.0 image text2img --prompt "..." --json
 npx -y agnes-ai-cli@^0.1.0 video text2video --prompt "..." --json
-npx -y agnes-ai-cli@^0.1.0 video poll task_123 --json
+npx -y agnes-ai-cli@^0.1.0 video poll video_123 --json
 ```
 
 This makes it easier to:
 
-- read `taskId`
+- read `taskId` and `videoId`
 - extract image URLs
 - extract final video URLs
 - detect failures cleanly
@@ -481,7 +481,8 @@ This makes it easier to:
 - Text endpoint behind CLI: `/chat/completions`
 - Image endpoint behind CLI: `/images/generations`
 - Video create endpoint behind CLI: `/videos`
-- Video poll endpoint behind CLI: `/videos/{task_id}`
+- Video recommended poll endpoint behind CLI: `/agnesapi?video_id={video_id}`
+- Video legacy poll endpoint behind CLI: `/videos/{task_id}`
 
 - Text model: `agnes-2.0-flash`
 - Image model: `agnes-image-2.1-flash`

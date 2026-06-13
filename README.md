@@ -246,7 +246,7 @@ choose the right Agnes model and authenticate cleanly.
 | `agnes-2.0-flash` | chat, coding, streaming, tool calling, agent loops | `/v1/chat/completions` | `model`, `messages` | OpenAI-style `tools`, `tool_choice`, `stream` |
 | `agnes-image-2.1-flash` | new text-to-image, image-to-image, denser layouts, composition-preserving edits | `/v1/images/generations` | `model`, `prompt` | `size`, `extra_body.image`, `extra_body.response_format`; strongest fit for high-information-density scenes |
 | `agnes-image-2.0-flash` | edit-heavy workflows, multi-image composition, compatibility-style image flows | `/v1/images/generations` | `model`, `prompt` | often pair with `tags: ["img2img"]`; supports `seed`, `extra_body.image`, `extra_body.response_format` |
-| `agnes-video-v2.0` | text-to-video, image-to-video, multi-image guided video, keyframes | `/v1/videos` and `/v1/videos/{task_id}` | `model`, `prompt` | asynchronous task workflow; mind `num_frames`, `frame_rate`, `extra_body.image`, `extra_body.mode` |
+| `agnes-video-v2.0` | text-to-video, image-to-video, multi-image guided video, keyframes | create: `/v1/videos`; poll: `/agnesapi?video_id={video_id}` | `model`, `prompt` | asynchronous task workflow; create returns `taskId` and `videoId`; use `videoId` for polling |
 
 ## Pricing / Operational Caveats
 
