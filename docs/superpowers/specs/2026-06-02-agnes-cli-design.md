@@ -337,7 +337,7 @@ await agnes.video.generate({
   prompt: "Create a smooth premium transition between the two frames",
 })
 
-await agnes.video.poll("task_123")
+await agnes.video.poll("video_123")
 ```
 
 ### Type Shapes
@@ -539,7 +539,7 @@ The CLI should support:
 
 - `media url`: print only the resulting URL
 - image commands: print the resulting image URL
-- video create commands: print `task_id` and status summary
+- video create commands: print `task_id`, `video_id`, and status summary
 - `video poll`: print the resulting video URL and completion fields
 
 ### JSON Output
@@ -550,6 +550,7 @@ Examples:
 {
   "ok": true,
   "taskId": "task_123",
+  "videoId": "video_123",
   "status": "queued"
 }
 ```
@@ -565,7 +566,7 @@ Examples:
 ### Video Task Normalization
 
 The CLI and JS API must normalize Agnes async video responses into a stable
-shape, regardless of whether the raw API returns `id` or `task_id`.
+shape, regardless of whether the raw API returns `id`, `task_id`, or `video_id`.
 
 Recommended normalized task object:
 
@@ -573,6 +574,7 @@ Recommended normalized task object:
 {
   "ok": true,
   "taskId": "task_123",
+  "videoId": "video_123",
   "status": "queued",
   "rawStatus": "queued",
   "model": "agnes-video-v2.0"
@@ -585,6 +587,7 @@ Recommended normalized poll result:
 {
   "ok": true,
   "taskId": "task_123",
+  "videoId": "video_123",
   "status": "completed",
   "videoUrl": "https://...",
   "seconds": 10.0,
@@ -603,6 +606,8 @@ Guaranteed status enum:
 Rules:
 
 - map raw `id` or `task_id` into `taskId`
+- preserve `video_id` as `videoId`; when the recommended poll endpoint returns
+  `id: "video_..."`, preserve it as `videoId` too
 - preserve the raw provider status as `rawStatus` when useful
 - `video.generate()` returns a normalized task object and does not auto-poll
 - `video.poll()` returns a normalized terminal result object
@@ -735,7 +740,7 @@ CLI as the preferred execution path.
 - local-path vs URL passthrough behavior
 - rc file selection logic
 - JSON output formatting
-- `task_id` vs `id` normalization
+- `task_id` / `video_id` / `id` normalization
 - video status mapping
 - validation of `numFrames <= 441`
 - validation of `numFrames = 8n + 1`
@@ -749,7 +754,7 @@ CLI as the preferred execution path.
 - `agnes image text2img --help`
 - `agnes video keyframes --help`
 - `agnes auth check`
-- `agnes video poll task_123 --json`
+- `agnes video poll video_123 --json`
 
 ### Integration Tests
 
