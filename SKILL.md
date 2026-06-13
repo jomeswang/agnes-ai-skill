@@ -3,12 +3,24 @@ name: agnes-ai-skill
 version: 1.2.2
 description: "Use when the user wants Agnes AI text, image, or video generation and should execute it through the agnes-ai-cli command line instead of hand-writing raw HTTP requests."
 tags:
+  - agnes
   - agnes-ai
+  - agnes-skill
   - multimodal-ai
+  - free-ai-api
+  - free-ai-model
   - text-generation
   - image-generation
+  - ai-image-generation
+  - text-to-image
+  - image-editing
+  - image-to-image
   - video-generation
+  - ai-video-generation
+  - text-to-video
+  - image-to-video
   - api-integration
+  - agent-skill
   - codex
   - claude-code
   - openclaw

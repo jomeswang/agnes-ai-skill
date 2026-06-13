@@ -1,4 +1,4 @@
-# Agnes AI Skill
+# Agnes AI 免费文本 / 生图 / 生视频 Agent Skill
 
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-SKILL.md-blue)](./SKILL.md)
@@ -6,39 +6,59 @@
 [![Agnes AI](https://img.shields.io/badge/platform-Agnes%20AI-ff6b3d)](https://platform.agnes-ai.com/)
 [![English README](https://img.shields.io/badge/docs-English-blue)](./README.md)
 
-## 📣 重要公告
+Agnes AI Skill 是面向 Codex、Claude Code、OpenClaw、Claude Desktop、Hermes、
+WorkBuddy、Cherry Studio、Opencode 等 AI Agent 工具的免费全模态 Skill。它通过一个根目录
+`SKILL.md` 帮助 Agent 调用 Agnes 2.0 API，支持文本生成、生图、图片编辑、文生视频、图生视频和
+API 集成。
 
-**Agnes 2.0 全模态模型 API 正式开放全球免费调用！**
+适合搜索 Agnes AI skill、Codex skills、Claude Code skills、OpenClaw skills、
+免费 AI API、免费 AI 模型、免费生图、免费生视频、文生图和图生视频的 Agent 工作流。
 
-- ✅ 不限期、全模态，API 调用完全免费（RPM 20 以内）
-- ✅ 注册官网 → 生成 KEY → 直接调用
-- ✅ 文本、图像、视频全能适配
-- ✅ 模型持续升级并保持免费
-
-**官方平台：** https://platform.agnes-ai.com
-
-> 当前官方模型文档也包含价格信息。涉及成本、额度或商业使用时，请以实时官方文档为准。
+English: Agnes AI free text, image, and video generation Agent Skill for Codex,
+Claude Code, OpenClaw, Claude Desktop, Hermes, WorkBuddy, Cherry Studio,
+Opencode, and other SKILL.md-compatible agent tools.
 
 ## 快速开始
 
-将 `SKILL.md` 放入你的 AI 工具 Skill 目录，或直接把下面这句话复制给 Agent：
+使用支持仓库 Skill 的安装器：
+
+```bash
+npx skills add jomeswang/agnes-ai-skill -g
+```
+
+或直接把下面这句话复制给 Agent：
 
 ```text
 请读取并安装 Agnes AI Skill：https://github.com/jomeswang/agnes-ai-skill
 ```
 
-安装完成后，前往 [platform.agnes-ai.com/settings/apiKeys](https://platform.agnes-ai.com/settings/apiKeys) 注册并创建 Agnes API Key，再配置为 `AGNES_API_KEY`。之后告诉 Agent `我要生图`、`我要生视频` 或 `我要接入 Agnes API`，Agent 就可以自动选择合适的 Agnes 模型和执行方式。
+安装完成后，前往 [platform.agnes-ai.com/settings/apiKeys](https://platform.agnes-ai.com/settings/apiKeys) 注册并创建 Agnes API Key，再配置为 `AGNES_API_KEY`。之后告诉 Agent `我要生图`、`我要生视频`、`帮我改图` 或 `我要接入 Agnes API`，Agent 就可以自动选择合适的 Agnes 模型和执行方式。
 
 这个 Skill 会帮助 Agent：
 
-- 指导新用户完成 Agnes AI 接入和 API Key 创建
-- 在文本、图像、视频模型之间选择合适能力
+- 完成 Agnes AI 接入并持久化 `AGNES_API_KEY`
+- 使用 `agnes-2.0-flash` 进行聊天、编码、流式输出和工具调用
+- 使用 `agnes-image-2.0-flash` 与 `agnes-image-2.1-flash` 进行 AI 生图、图片编辑和图生图
+- 使用 `agnes-video-v2.0` 进行文生视频、图生视频和异步视频生成
 - 优先使用配套 `agnes-ai-cli` 执行真实请求
-- 指导 Codex、OpenClaw、Claude Code/Desktop、Hermes、WorkBuddy、Cherry Studio、Opencode 等 Agent 工具集成
 
-兼容工具：OpenClaw、Claude Code、Claude Desktop、Hermes、Codex、WorkBuddy、Cherry Studio、Opencode、Kimi Work。
+兼容工具：Codex、Claude Code、Claude Desktop、OpenClaw、Hermes、WorkBuddy、
+Cherry Studio、Opencode、Kimi Work，以及其他 Agent Skills / SKILL.md 兼容环境。
 
 ![Agnes AI frontier models hero](./assets/images/agnes-frontier-models-banner.jpg)
+
+## 重要公告
+
+**Agnes 2.0 全模态模型 API 正式开放全球免费调用！**
+
+- 不限期、全模态，API 调用完全免费（RPM 20 以内）
+- 注册官网，生成 KEY，直接调用
+- 文本、图像、视频全能适配
+- 模型持续升级并保持免费
+
+**官方平台：** https://platform.agnes-ai.com
+
+> 当前官方模型文档也包含价格信息。涉及成本、额度或商业使用时，请以实时官方文档为准。
 
 这个仓库提供一个根目录 `SKILL.md`，让编码 Agent 可以快速：
 

@@ -1,4 +1,4 @@
-# Agnes AI Skill
+# Agnes AI Free Text, Image & Video Generation Skill
 
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-SKILL.md-blue)](./SKILL.md)
@@ -6,24 +6,30 @@
 [![Agnes AI](https://img.shields.io/badge/platform-Agnes%20AI-ff6b3d)](https://platform.agnes-ai.com/)
 [![Chinese README](https://img.shields.io/badge/docs-%E4%B8%AD%E6%96%87-blue)](./README.zh-CN.md)
 
-## 📣 Important Announcement
+Agnes AI Skill is a free multimodal Agent Skill for Codex, Claude Code,
+OpenClaw, Claude Desktop, Hermes, WorkBuddy, Cherry Studio, Opencode, and
+similar AI agent tools. It helps agents use Agnes 2.0 APIs for text generation,
+image generation, image editing, text-to-video, image-to-video, and API
+integration through a single root `SKILL.md`.
 
-**Agnes 2.0 full-modal model APIs are officially open for free global calls.**
+Use this Agnes skill when you want an Agnes AI skill, image generation skill,
+video generation skill, text to image workflow, image to video workflow, free AI API
+workflow, or free AI model workflow that fits Codex skills, Claude Code skills,
+and OpenClaw skills.
 
-- ✅ No fixed end date, full-modal access, and free API calls within RPM 20
-- ✅ Register on the official platform → create a key → call directly
-- ✅ Text, image, and video are all supported
-- ✅ Models keep upgrading while free access is maintained
-
-**Official platform:** https://platform.agnes-ai.com
-
-> The live official model docs also include pricing sections. For cost, quota,
-> or commercial use, check the current official docs first.
+中文：Agnes AI 免费文本 / 生图 / 图片编辑 / 生视频 Agent Skill，支持 Codex、
+Claude Code、OpenClaw、Claude Desktop、Hermes、WorkBuddy、Cherry Studio、
+Opencode 等工具。
 
 ## Quick Start
 
-Put `SKILL.md` in your AI tool's skill directory, or copy this sentence to your
-agent:
+Install the skill with a repository-aware skills installer:
+
+```bash
+npx skills add jomeswang/agnes-ai-skill -g
+```
+
+Or copy this sentence to your agent:
 
 ```text
 Please read and install Agnes AI Skill: https://github.com/jomeswang/agnes-ai-skill
@@ -32,21 +38,38 @@ Please read and install Agnes AI Skill: https://github.com/jomeswang/agnes-ai-sk
 After installation, create an Agnes API key at
 [platform.agnes-ai.com/settings/apiKeys](https://platform.agnes-ai.com/settings/apiKeys)
 and configure it as `AGNES_API_KEY`. Then tell the agent `generate an image`,
-`generate a video`, or `integrate Agnes API`, and it can choose the proper Agnes
-model and execution path automatically.
+`generate a video`, `edit this image`, or `integrate Agnes API`, and it can
+choose the proper Agnes model and execution path automatically.
 
 This skill helps agents:
 
-- guide new users through Agnes AI setup and API key creation
-- choose the right capability across text, image, and video models
+- set up Agnes AI and persist an `AGNES_API_KEY`
+- use `agnes-2.0-flash` for chat, coding, streaming, and tool calling
+- use `agnes-image-2.0-flash` and `agnes-image-2.1-flash` for AI image
+  generation, image editing, and image-to-image workflows
+- use `agnes-video-v2.0` for text-to-video, image-to-video, and async video
+  generation
 - prefer the companion `agnes-ai-cli` for live requests
-- guide integrations for Codex, OpenClaw, Claude Code/Desktop, Hermes,
-  WorkBuddy, Cherry Studio, Opencode, and similar agent tools
 
-Compatible tools: OpenClaw, Claude Code, Claude Desktop, Hermes, Codex,
-WorkBuddy, Cherry Studio, Opencode, Kimi Work.
+Compatible tools: Codex, Claude Code, Claude Desktop, OpenClaw, Hermes,
+WorkBuddy, Cherry Studio, Opencode, Kimi Work, and other Agent Skills /
+SKILL.md-compatible environments.
 
 ![Agnes AI frontier models hero](./assets/images/agnes-frontier-models-banner.jpg)
+
+## Important Announcement
+
+**Agnes 2.0 full-modal model APIs are officially open for free global calls.**
+
+- No fixed end date, full-modal access, and free API calls within RPM 20
+- Register on the official platform, create a key, and call directly
+- Text, image, and video are all supported
+- Models keep upgrading while free access is maintained
+
+**Official platform:** https://platform.agnes-ai.com
+
+> The live official model docs also include pricing sections. For cost, quota,
+> or commercial use, check the current official docs first.
 
 This repository packages a single root `SKILL.md` so coding agents can quickly:
 
