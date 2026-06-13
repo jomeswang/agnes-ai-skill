@@ -370,24 +370,24 @@ Use:
 
 1. `npx -y agnes-ai-cli@^0.1.0 video text2video --help`
 2. run `npx -y agnes-ai-cli@^0.1.0 video text2video ... --json`
-3. capture `taskId`
-4. run `npx -y agnes-ai-cli@^0.1.0 video poll <taskId> --json`
+3. capture `videoId`
+4. run `npx -y agnes-ai-cli@^0.1.0 video poll <videoId> --json`
 
 ### Image-To-Video
 
 1. `npx -y agnes-ai-cli@^0.1.0 video img2video --help`
 2. if the user gave a local path, let the CLI bridge it automatically
 3. run `npx -y agnes-ai-cli@^0.1.0 video img2video ... --json`
-4. capture `taskId`
-5. run `npx -y agnes-ai-cli@^0.1.0 video poll <taskId> --json`
+4. capture `videoId`
+5. run `npx -y agnes-ai-cli@^0.1.0 video poll <videoId> --json`
 
 ### Keyframes
 
 1. `npx -y agnes-ai-cli@^0.1.0 video keyframes --help`
 2. pass `--image` at least twice
 3. run `npx -y agnes-ai-cli@^0.1.0 video keyframes ... --json`
-4. capture `taskId`
-5. run `npx -y agnes-ai-cli@^0.1.0 video poll <taskId> --json`
+4. capture `videoId`
+5. run `npx -y agnes-ai-cli@^0.1.0 video poll <videoId> --json`
 
 ## Image Guidance
 
@@ -469,6 +469,8 @@ This makes it easier to:
   or parameter actually works.
 - For image results, expect a URL in the response.
 - For video results, expect task creation first, then polling.
+- Prefer `videoId` for polling. Passing an older `taskId` remains compatible
+  through the CLI's legacy endpoint routing.
 - Use the CLI's local-file bridge instead of manually uploading files yourself
   unless the user explicitly wants a separate upload step.
 - If the user asks for SDK code, translate the confirmed CLI behavior into the
